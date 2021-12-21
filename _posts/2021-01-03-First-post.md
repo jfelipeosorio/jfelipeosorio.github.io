@@ -14,9 +14,9 @@ Hey this is my first post.
 We are gonna have so much fun.
 
 ## Math
+Centered math
 \\[ x = {-b \pm \sqrt{b^2-4ac} \over 2a} \\]
-$$x^2$$
-Hey this is a formula $x^4$.
+Inline math $$x^2$$.
 
 ## Images
 ![imagen](/img/posts/First-post/alldensities_pot3.jpeg)
