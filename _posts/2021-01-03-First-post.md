@@ -13,6 +13,9 @@ We are gonna have so much fun.
 ## Math
 $x^2$
 
+## Images
+![imagen](/img/posts/First-post/alldensities_pot3.jpeg)
+
 # Code
 ```
 a = input()
