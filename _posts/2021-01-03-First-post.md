@@ -2,7 +2,7 @@
 layout: post
 title: "Kernel Density Estimation using Density Matrices"
 subtitle: "Quantum mechanics math can help us calculating density estimates faster"
-background: '/img/posts/01.jpg'
+background: '/img/posts/First-post/alldensities_pot3.jpeg'
 ---
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
