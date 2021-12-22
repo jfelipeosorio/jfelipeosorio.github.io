@@ -1,0 +1,24 @@
+I"­<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>Density estimation methods can be used to solve a variety of statistical and machine learning challenges. They can be used to tackle a variety of problems, including anomaly detection, generative models, semi-supervised learning, compression, and text-to-speech.  A popular technique to find density estimates for new samples in a non parametric set up is Kernel Density Estimation (KDE), a method which suffers from costly evaluations especially for large data sets and higher dimensions. In this post we will discuss on the math behind an efficient way to calculate density estimates using density matrices (a concept from quantum mechanics).</p>
+<h1 id="kernel-density-estimation">Kernel Density Estimation</h1>
+<p>If we are given a realization of a random sample \(\{x_1,\dots,x_n\}\subseteq\mathbb{R}\)</p>
+<h2 id="text">Text</h2>
+<p>We are gonna have so much fun.</p>
+
+<h2 id="math">Math</h2>
+<p>Centered math
+\[ x = {-b \pm \sqrt{b^2-4ac} \over 2a} \]
+Inline math \(x^2\).</p>
+
+<h2 id="images">Images</h2>
+<p><img src="/img/posts/First-post/alldensities_pot3.jpeg" alt="imagen" /></p>
+
+<h1 id="code">Code</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = input()
+
+</code></pre></div></div>
+
+:ET
