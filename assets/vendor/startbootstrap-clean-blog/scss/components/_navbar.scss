@@ -8,6 +8,9 @@
     .navbar-brand {
         font-weight: 800;
         color: $gray-800;
+        .logo-dark{
+            display: none;
+        }
     }
 
     .navbar-toggler {
