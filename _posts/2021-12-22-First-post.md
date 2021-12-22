@@ -17,16 +17,23 @@ and has inspired many methods which rely on the use of the density function such
 as non parametric regression when non linear patterns are observed. Also in machine learning many approaches to anomaly detection make use of the probability
 density function. 
 
-The parametric approach to density estimation given some data $$\mathbf{x}_1,\dots,\mathbf{x}_N$$ assumes that each $$\mathbf{x}_i$$ is sampled independently from a random vector $$\mathbf{X}\sim f(\mathbf{x};\mathbf{\theta})$$ and the theory is developed around building an estimator $$\hat{\mathbf{\theta}}$$ with good statistical properties such us unbiasdness, consistency, efficiency and sufficiency. and finally the density of a new sample $$\mathbf{x}$$ is given by:
+The parametric approach to density estimation given some data $$\mathbf{x}_1,\dots,\mathbf{x}_N$$ assumes that each $$\mathbf{x}_i$$ is sampled independently from a random vector $$\mathbf{X}\sim f(\mathbf{x};\mathbf{\theta})$$ and the theory is developed around building an estimator $$\hat{\mathbf{\theta}}$$ with good statistical properties such us unbiasdness, consistency, efficiency and sufficiency. The probability density of a new sample $$\mathbf{x}$$ is given by:
 \\[
-x^2
+\hat{f}(\mathbf{x}) = f(\mathbf{x};\hat{\mathbf{\theta}})
+\\]
+
+Another approach to get density estimations in new samples in a non parametric fashion is KDE and it can be understood as a weighted sum of density contributions that are centered at each data point. Formally, given a univariate random sample $$X_1,...,X_N$$ from an unknown distribution with density $$f$$, the KDE estimator of the density at a query point $$x\in\mathbb{R}$$ is given by
+
+
+\\[
+    \hat{f}(x) = \frac{1}{Nh}\sum_{i=1}^N K\left(\frac{x-X_i}{h}\right).
 \\]
 ## Kernel Density Estimation
 If we are given a realization of a random sample $$\{x_1,\dots,x_n\}\subseteq\mathbb{R}$$ and then we want to estimate the probability density (in a non-parametric fashion, i.e., not assuming any underlying distribution for each of the random variables that generated the given points) at a new given point $$x^*\in\mathbb{R}$$ then we can use the *kernel density estimation* at that point which is given by:
 
 
 ## Text
-We are gonna have so much fun.
+We are gonna have so much fun. 
 
 ## Math
 Centered math
