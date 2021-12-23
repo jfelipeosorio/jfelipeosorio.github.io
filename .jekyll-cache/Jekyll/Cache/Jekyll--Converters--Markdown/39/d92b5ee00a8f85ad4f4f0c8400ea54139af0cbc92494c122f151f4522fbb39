@@ -1,4 +1,4 @@
-I"&<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"&<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -127,7 +127,8 @@ of the system and typically \(H=\mathbb{C}^d\).</p>
 
 <p>We call \(\hat f_\rho(\mathbf{x})\) the <em>DMKDE</em> estimation at \(\mathbf{x}\).</p>
 
-<h2 id="images">Images</h2>
-<p><img src="/img/posts/First-post/alldensities_pot3.jpeg" alt="imagen" /></p>
+<h2 id="what-is-next">What is next?</h2>
+
+<p>See implementation in <a href="/2021/12/23/Part2_DMKDE.html">Part 2</a>.</p>
 
 :ET
