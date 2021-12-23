@@ -22,14 +22,30 @@ The parametric approach to density estimation given some data $$\mathbf{x}_1,\do
 \hat{f}(\mathbf{x}) = f(\mathbf{x};\hat{\mathbf{\theta}})
 \\]
 
-Another approach to get density estimations in new samples in a non parametric fashion is KDE and it can be understood as a weighted sum of density contributions that are centered at each data point. Formally, given a univariate random sample $$X_1,...,X_N$$ from an unknown distribution with density $$f$$, the KDE estimator of the density at a query point $$x\in\mathbb{R}$$ is given by
+Another approach to get density estimations in new samples in a non-parametric fashion is KDE and it can be understood as a weighted sum of density contributions that are centered at each data point. Formally, given a univariate random sample $$X_1,...,X_N$$ from an unknown distribution with density $$f$$, the KDE estimator of the density at a query point $$x\in\mathbb{R}$$ is given by
 
 
 \\[
     \hat{f}(x) = \frac{1}{Nh}\sum_{i=1}^N K\left(\frac{x-X_i}{h}\right).
 \\]
-## Kernel Density Estimation
-If we are given a realization of a random sample $$\{x_1,\dots,x_n\}\subseteq\mathbb{R}$$ and then we want to estimate the probability density (in a non-parametric fashion, i.e., not assuming any underlying distribution for each of the random variables that generated the given points) at a new given point $$x^*\in\mathbb{R}$$ then we can use the *kernel density estimation* at that point which is given by:
+
+where $$h$$ is called the *bandwidth* and $$K:\mathbb{R}\rightarrow \mathbb{R}_{\geq 0} $$ is a positive definite function and its called the *kernel function*.
+
+Notice that a naive direct evaluation of KDE at $$m$$ query points for $$N$$ samples requires $$O(mN)$$ kernel evaluations and $$O(mN)$$ additions and multiplications. Also if we restrict to $$N$$ query points then we get a computational complexity of $$O(N^2)$$, making it a very expensive trade-off, especially for large data sets and higher dimensions (see more [here](https://link.springer.com/book/10.1007/978-3-319-71688-6)).
+
+According to [Siminelakis](https://proceedings.mlr.press/v97/siminelakis19a.html), one technique to resolve the problem of scalability of the naïve evaluation of KDE in the literature is on discovering fast approximate evaluation of the kernel, and there are two primary lines of effort: space partitioning methods and Monte Carlo random sampling.
+
+The formalism of density operators and density matrices was developed by Von Neumann as a foundation of quantum statistical mechanics.  From the pointof view of machine learning,  density matrices have an interesting feature: the fact that they combine linear algebra and probability, two of the pillars of machine learning, in a very particular but powerful way. 
+
+The central idea of this post is to use density matrices to represent probability distributions tackling the important drawback of scalability and create a competitive strategy to compute densities on new samples.
+
+
+## Math background
+The multivariate kernel density estimator at a query point $$\mathbf{x}\in\mathbb{R}^d$$ for a given random sample $$\mathbf{X}_1,\dots,\mathbf{X}_N$$ drawn from an unknown density $$f$$ is given by 
+
+\\[
+    \hat{f}_\gamma(\mathbf{x})=\frac{1}{N(\pi / \gamma)^{\frac{d}{2}}} \sum_{i=1}^{N} \exp \left({-\gamma\left\|\mathbf{x}-\mathbf{X}_{i}\right\|^{2}}\right)    
+\\]
 
 
 ## Text
