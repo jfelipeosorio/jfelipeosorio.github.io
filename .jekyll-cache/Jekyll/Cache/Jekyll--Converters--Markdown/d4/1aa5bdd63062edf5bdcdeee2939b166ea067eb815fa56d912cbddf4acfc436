@@ -1,0 +1,196 @@
+I"<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>In <a href="/2021/12/22/Part1_DMKDE.html">Part 1</a> we checked at the most important mathematical and statistical concepts that could allow us to talk about Kernel Density Estimation using Density Matrices. In Part 2, we would like to understand how to use the algorithm already implemented <a href="https://github.com/fagonzalezo/qmc">here</a> by Professor <a href="https://dis.unal.edu.co/~fgonza/">Fabio Gonzalez</a> and its research group <a href="http://www.ingenieria.unal.edu.co/mindlab/">MindLab</a> using custom layers and models in <a href="https://www.tensorflow.org/">TensorFlow 2</a>.</p>
+
+<h2 id="install-qmc">Install <code class="language-plaintext highlighter-rouge">qmc</code></h2>
+
+<p>Let´s install (git clone to the file system of the Colab VM) the module <code class="language-plaintext highlighter-rouge">qmc</code> which contains</p>
+<blockquote>
+  <p>Custom models inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.Model</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p>Custom layers inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.layers.Layer</code>.</p>
+</blockquote>
+
+<p>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found at <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Install qmc if running in Google Colab
+</span><span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">google.colab</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">R</span> <span class="n">qmc</span> <span class="n">qmc1</span>
+    <span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">fagonzalezo</span><span class="o">/</span><span class="n">qmc</span><span class="p">.</span><span class="n">git</span>
+    <span class="err">!</span><span class="n">mv</span> <span class="n">qmc</span> <span class="n">qmc1</span>
+    <span class="err">!</span><span class="n">mv</span> <span class="n">qmc1</span><span class="o">/</span><span class="n">qmc</span> <span class="p">.</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"../"</span><span class="p">)</span>
+</code></pre></div></div>
+<h2 id="define-visualization-tools">Define visualization tools</h2>
+
+<p>First we use the iPython functionality to show richer outputs using the magic command <code class="language-plaintext highlighter-rouge">%matplotlib inline</code> and force visualizations to be printed.</p>
+
+<p>Then we import two important libraries:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">numpy</code> : Support for large, multi-dimensional arrays and matrices, along with a large collection of high-level mathematical functions to operate on these arrays.</li>
+  <li><code class="language-plaintext highlighter-rouge">pylab</code> : Matplotlib is the toolkit, PyPlot is an interactive way to use Matplotlib and PyLab is the same thing as PyPlot but with some extra shortcuts. Using PyLab is discouraged now.</li>
+</ul>
+
+<p>Now let´s create three functions for ploting purposes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">plot_data(X,y)</code>: It has two args, one is the set of points in $\mathbb{R}^2$ and the second one is a vector which contains the class of every point given. It returns a 2D scatter plot with points colored in a rainbow fashion according to their class.</li>
+  <li><code class="language-plaintext highlighter-rouge">plot_decision_region(X,pred_fun)</code>: It has two args, one is the vector which will define the 2D square plot region(min_x,max_x,vector of points to evaluate the prediction function,…) and the other argument is the prediction function which we are interested to plot. The function returns a 2D contour plot and the points colored with the real class which they belong to.</li>
+  <li><code class="language-plaintext highlighter-rouge">gen_pred_fun</code>: It has one arg which is a classifier which has a <code class="language-plaintext highlighter-rouge">.predict()</code> method and from this this functions extracts the predicted values.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="n">pl</span>
+
+<span class="c1"># Function to visualize a 2D dataset
+</span><span class="k">def</span> <span class="nf">plot_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># Subsets y with unique elements in a new array
+</span>    <span class="n">y_unique</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="c1"># Generates a number of colors in rainbow according to the y_unique.size
+</span>    <span class="n">colors</span> <span class="o">=</span> <span class="n">pl</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">rainbow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">y_unique</span><span class="p">.</span><span class="n">size</span><span class="p">))</span>    
+    <span class="k">for</span> <span class="n">this_y</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_unique</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+        <span class="n">this_X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">this_y</span><span class="p">]</span>
+        <span class="n">pl</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">this_X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">this_X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>  <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span>
+                    <span class="n">label</span><span class="o">=</span><span class="s">"Class %s"</span> <span class="o">%</span> <span class="n">this_y</span><span class="p">)</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"best"</span><span class="p">)</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Data"</span><span class="p">)</span>
+    
+<span class="c1"># Function to visualize the decission surface of a classifier
+</span><span class="k">def</span> <span class="nf">plot_decision_region</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pred_fun</span><span class="p">):</span>
+    <span class="n">min_x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">max_x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">min_y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">max_y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">min_x</span> <span class="o">=</span> <span class="n">min_x</span> <span class="o">-</span> <span class="p">(</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.05</span>
+    <span class="n">max_x</span> <span class="o">=</span> <span class="n">max_x</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.05</span>
+    <span class="n">min_y</span> <span class="o">=</span> <span class="n">min_y</span> <span class="o">-</span> <span class="p">(</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.05</span>
+    <span class="n">max_y</span> <span class="o">=</span> <span class="n">max_y</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.05</span>
+    <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_x</span><span class="p">,</span> <span class="n">max_x</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">y_vals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_y</span><span class="p">,</span> <span class="n">max_y</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">XX</span><span class="p">,</span> <span class="n">YY</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">)</span>
+    <span class="n">grid_r</span><span class="p">,</span> <span class="n">grid_c</span> <span class="o">=</span> <span class="n">XX</span><span class="p">.</span><span class="n">shape</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[[</span><span class="n">XX</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">YY</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_r</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_c</span><span class="p">)]</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">pred_fun</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">vals</span><span class="p">))</span>
+    <span class="n">ZZ</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="p">(</span><span class="n">grid_r</span><span class="p">,</span> <span class="n">grid_c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">preds</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">ZZ</span><span class="p">))</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">ZZ</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">pl</span><span class="p">.</span><span class="n">cm</span><span class="p">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="n">CS</span> <span class="o">=</span> <span class="n">pl</span><span class="p">.</span><span class="n">contour</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">ZZ</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)])</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"x"</span><span class="p">)</span>
+    <span class="n">pl</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"y"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">gen_pred_fun</span><span class="p">(</span><span class="n">clf</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pred_fun</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">clf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pred_fun</span>
+</code></pre></div></div>
+
+<h2 id="import-qmctflayers-and-qmctfmodels">Import <code class="language-plaintext highlighter-rouge">qmc.tf.layers</code> and <code class="language-plaintext highlighter-rouge">qmc.tf.models</code></h2>
+
+<p>Also we import</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">accuracy_score</code>: For calculating how good a classifier is. Thus counting the good predictions and dividing by the total of elements in the test set.</li>
+  <li><code class="language-plaintext highlighter-rouge">make_blobs, make_moons, make_circles</code>: Datasets for doing classification.</li>
+  <li><code class="language-plaintext highlighter-rouge">MinMaxScaler, OneHotEncoder</code>: MinMaxScaler scales and translates each feature individually such that it is in the given range on the training set, e.g. between zero and one. OneHotEncoder maps a categorical value into binary variables corresponding to the number of classes in the categorical variable.</li>
+  <li><code class="language-plaintext highlighter-rouge">train_test_split</code>: Spliting the data.</li>
+  <li><code class="language-plaintext highlighter-rouge">tf</code>: Tensorflow.</li>
+  <li><code class="language-plaintext highlighter-rouge">layers</code>: Custom layers in qmc.</li>
+  <li><code class="language-plaintext highlighter-rouge">models</code>: Custom models in qmc.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span><span class="p">,</span> <span class="n">make_moons</span><span class="p">,</span> <span class="n">make_circles</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">qmc.tf.layers</span> <span class="k">as</span> <span class="n">layers</span>
+<span class="kn">import</span> <span class="nn">qmc.tf.models</span> <span class="k">as</span> <span class="n">models</span>
+</code></pre></div></div>
+
+<h2 id="kernel-density-estimation--classical-approach">Kernel density estimation : Classical approach</h2>
+
+<p>We first import two distributions <code class="language-plaintext highlighter-rouge">norm</code> and <code class="language-plaintext highlighter-rouge">bernoulli</code>. Then <code class="language-plaintext highlighter-rouge">gaussian_kde</code> for kernel density estimation using gaussian kernels.</p>
+
+<p>Then we define the class <code class="language-plaintext highlighter-rouge">Mixture</code> inherited from <code class="language-plaintext highlighter-rouge">object</code> for defining a two component gaussian mixture</p>
+
+\[f (x) = \alpha\left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_1)^2}{2\sigma_1^2}\right)\right) + \left(1-\alpha \right) \left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_2)^2}{2\sigma_2^2}\right)\right).\]
+
+<p>In the constructor <code class="language-plaintext highlighter-rouge">__init__</code> we define five parameters: four for two univariate normals (<code class="language-plaintext highlighter-rouge">loc1</code>,<code class="language-plaintext highlighter-rouge">loc2</code>,<code class="language-plaintext highlighter-rouge">scale1</code> and <code class="language-plaintext highlighter-rouge">scale2</code>) + one <code class="language-plaintext highlighter-rouge">alpha</code> for the weights of the mixture. With the location and scale parameters we define two normals and assign them to <code class="language-plaintext highlighter-rouge">var1</code> and <code class="language-plaintext highlighter-rouge">var2</code>.</p>
+
+<p>And two methods</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">pdf</code> which returns the mixture of two gaussians.</li>
+  <li><code class="language-plaintext highlighter-rouge">rvs</code> which returns a sample of the mixture. Remember that first choose a mixture component by drawing \(j\) from the categorical distribution with probabilities \([\pi_1,\dots,\pi_d]\). This can be done using a random number generator for the categorical distribution. Note. In our case we only have two components so the “categorical distribution” reduces to a bernoulli distribution.</li>
+</ul>
+
+<p>Now we create an object <code class="language-plaintext highlighter-rouge">mixt</code> from <code class="language-plaintext highlighter-rouge">Mixture</code> class with some given parameters. That give us a “bimodal” shape curve for the density.</p>
+
+<p>Then we extract a sample of <code class="language-plaintext highlighter-rouge">size = 100</code> from mixt using the <code class="language-plaintext highlighter-rouge">rvs</code> method. Save it to <code class="language-plaintext highlighter-rouge">sample</code>.</p>
+
+<p>In <code class="language-plaintext highlighter-rouge">kernel</code> we save the \(\hat f_{kde}\) estimated using <strong>kernel density estimation</strong> in a classical non parametric fashion applied to <code class="language-plaintext highlighter-rouge">sample</code> vector. Thus using <code class="language-plaintext highlighter-rouge">gaussian_kde</code>. Notice <code class="language-plaintext highlighter-rouge">gaussian_kde</code> includes automatic bandwidth determination.</p>
+
+<p>Finally we plot <strong>mixt</strong> \(f\) and <strong>kernel</strong> \(\hat f_{kde}\) using <code class="language-plaintext highlighter-rouge">pl.plot</code> for a windows plot vector <code class="language-plaintext highlighter-rouge">x</code>.</p>
+
+<p>As we want to compare our <em>quantum</em> way of estimating the density, we have to start out by defining a theoretical baseline model we want to approximate, in our case is <code class="language-plaintext highlighter-rouge">mixt</code>. Finally, the estimation method we would like to compare our model with is non pararmetric kernel density estimation, so we save this estimation in <code class="language-plaintext highlighter-rouge">kernel</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">bernoulli</span><span class="p">,</span> <span class="n">gaussian_kde</span>
+
+<span class="k">class</span> <span class="nc">Mixture</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">var1</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">loc1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">var2</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">loc2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        
+    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">var1</span><span class="p">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> 
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">var2</span><span class="p">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">stack</span><span class="p">([</span><span class="bp">self</span><span class="p">.</span><span class="n">var1</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="p">.</span><span class="n">var2</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="p">)],</span>  <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">vals</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">bernoulli</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)])</span>
+
+<span class="n">n_var</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mixt</span> <span class="o">=</span> <span class="n">Mixture</span><span class="p">(</span><span class="n">loc1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale1</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">scale2</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">mixt</span><span class="p">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> 
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">10.</span><span class="p">,</span><span class="mf">10.</span><span class="p">,</span><span class="mi">99</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mixt</span><span class="p">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">'r-'</span><span class="p">,</span>  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'norm pdf'</span><span class="p">)</span>
+<span class="n">pl</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kernel</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s">'b-'</span><span class="p">,</span>  <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'kde pdf'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h3 id="how-to-sample-from-the-guassian-mixture-model">How to sample from the Guassian Mixture Model?</h3>
+
+<p>First we stack the two random samples from the two gaussian densities in <code class="language-plaintext highlighter-rouge">valstest</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">valstest</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">stack</span><span class="p">([</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">).</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">4</span><span class="p">),</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">).</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)],</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">valstest</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0.14509451,  9.85286915],
+       [ 0.34545315, 11.22459855],
+       [-0.38473518,  9.34825703],
+       [-0.88421728,  8.82330827]])
+</code></pre></div></div>
+
+:ET
