@@ -1,38 +1,27 @@
-I"QÂ<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"¹½<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<p>In <a href="/2021/12/22/Part1_DMKDE.html">Part 1</a> we checked at the most important mathematical and statistical concepts that could allow us to talk about Kernel Density Estimation using Density Matrices. In Part 2, we would like to understand how to use the algorithm already implemented <a href="https://github.com/fagonzalezo/qmc">here</a> by Professor <a href="https://dis.unal.edu.co/~fgonza/">Fabio Gonzalez</a> and its research group <a href="http://www.ingenieria.unal.edu.co/mindlab/">MindLab</a> using custom layers and models in <a href="https://www.tensorflow.org/">TensorFlow 2</a>.</p>
+<p>In <a href="/2021/12/22/Part1_DMKDE.html">Part 1</a> we checked at the key mathematical and statistical concepts that could allow us to talk about Kernel Density Estimation using Density Matrices. In Part 2, we would like to describe how to use the algorithm already implemented in Python <a href="https://github.com/fagonzalezo/qmc">here</a> by Professor <a href="https://dis.unal.edu.co/~fgonza/">Fabio Gonzalez</a> and his research group <a href="http://www.ingenieria.unal.edu.co/mindlab/">MindLab</a> at Universidad Nacional de Colombia using custom layers and models in <a href="https://www.tensorflow.org/">TensorFlow 2</a>.</p>
 
 <h2 id="install-qmc">Install <code class="language-plaintext highlighter-rouge">qmc</code></h2>
 
-<p>LetÂ´s install (git clone to the file system of the Colab VM) the module <code class="language-plaintext highlighter-rouge">qmc</code> which contains</p>
-<blockquote>
-  <p>Custom models inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.Model</code>.</p>
-</blockquote>
+<p>LetÂ´s install the module <code class="language-plaintext highlighter-rouge">qmc</code> which contains</p>
 
-<blockquote>
-  <p>Custom layers inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.layers.Layer</code>.</p>
-</blockquote>
+<ol>
+  <li><strong>Custom models</strong> inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.Model</code>, in our case we will use:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">QMDensity()</code></li>
+    </ul>
+  </li>
+  <li><strong>Custom layers</strong> inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.layers.Layer</code>.</li>
+</ol>
 
-<p>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found at <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Install qmc if running in Google Colab
-</span><span class="k">try</span><span class="p">:</span>
-  <span class="kn">import</span> <span class="nn">google.colab</span>
-  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="k">except</span><span class="p">:</span>
-  <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="bp">False</span>
-
-<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
-    <span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">R</span> <span class="n">qmc</span> <span class="n">qmc1</span>
-    <span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">fagonzalezo</span><span class="o">/</span><span class="n">qmc</span><span class="p">.</span><span class="n">git</span>
-    <span class="err">!</span><span class="n">mv</span> <span class="n">qmc</span> <span class="n">qmc1</span>
-    <span class="err">!</span><span class="n">mv</span> <span class="n">qmc1</span><span class="o">/</span><span class="n">qmc</span> <span class="p">.</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="n">sys</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"../"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">fagonzalezo</span><span class="o">/</span><span class="n">qmc</span><span class="p">.</span><span class="n">git</span>
 </code></pre></div></div>
+
+<p>For more information about algorithms found in <code class="language-plaintext highlighter-rouge">qmc</code> you can</p>
+
 <h2 id="define-visualization-tools">Define visualization tools</h2>
 
 <p>First we use the iPython functionality to show richer outputs using the magic command <code class="language-plaintext highlighter-rouge">%matplotlib inline</code> and force visualizations to be printed.</p>
@@ -46,7 +35,7 @@
 <p>Now letÂ´s create three functions for ploting purposes:</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">plot_data(X,y)</code>: It has two args, one is the set of points in $\mathbb{R}^2$ and the second one is a vector which contains the class of every point given. It returns a 2D scatter plot with points colored in a rainbow fashion according to their class.</li>
+  <li><code class="language-plaintext highlighter-rouge">plot_data(X,y)</code>: It has two args, one is the set of points in \(\mathbb{R}^2\) and the second one is a vector which contains the class of every point given. It returns a 2D scatter plot with points colored in a rainbow fashion according to their class.</li>
   <li><code class="language-plaintext highlighter-rouge">plot_decision_region(X,pred_fun)</code>: It has two args, one is the vector which will define the 2D square plot region(min_x,max_x,vector of points to evaluate the prediction function,â€¦) and the other argument is the prediction function which we are interested to plot. The function returns a 2D contour plot and the points colored with the real class which they belong to.</li>
   <li><code class="language-plaintext highlighter-rouge">gen_pred_fun</code>: It has one arg which is a classifier which has a <code class="language-plaintext highlighter-rouge">.predict()</code> method and from this this functions extracts the predicted values.</li>
 </ul>
@@ -130,7 +119,7 @@
 
 \[f (x) = \alpha\left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_1)^2}{2\sigma_1^2}\right)\right) + \left(1-\alpha \right) \left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_2)^2}{2\sigma_2^2}\right)\right).\]
 
-<p>In the constructor <code class="language-plaintext highlighter-rouge">__init__</code> we define five parameters: four for two univariate normals (<code class="language-plaintext highlighter-rouge">loc1</code>,<code class="language-plaintext highlighter-rouge">loc2</code>,<code class="language-plaintext highlighter-rouge">scale1</code> and <code class="language-plaintext highlighter-rouge">scale2</code>) + one <code class="language-plaintext highlighter-rouge">alpha</code> for the weights of the mixture. With the location and scale parameters we define two normals and assign them to <code class="language-plaintext highlighter-rouge">var1</code> and <code class="language-plaintext highlighter-rouge">var2</code>.</p>
+<p>In the constructor <code class="language-plaintext highlighter-rouge">__init__</code> we define five parameters: four of them are related to the two univariate normals (<code class="language-plaintext highlighter-rouge">loc1</code>,<code class="language-plaintext highlighter-rouge">loc2</code>,<code class="language-plaintext highlighter-rouge">scale1</code> and <code class="language-plaintext highlighter-rouge">scale2</code>) and the other one <code class="language-plaintext highlighter-rouge">alpha</code> for the weights of the mixture. With the location and scale parameters we define two normals and assign them to <code class="language-plaintext highlighter-rouge">var1</code> and <code class="language-plaintext highlighter-rouge">var2</code>.</p>
 
 <p>And two methods</p>
 <ul>
@@ -177,7 +166,7 @@
 
 </code></pre></div></div>
 
-<h3 id="how-to-sample-from-the-guassian-mixture-model">How to sample from the Guassian Mixture Model?</h3>
+<h3 id="sample-from-the-guassian-mixture-model">Sample from the Guassian Mixture Model</h3>
 
 <p>First we stack the two random samples from the two gaussian densities in <code class="language-plaintext highlighter-rouge">valstest</code>.</p>
 
@@ -210,7 +199,7 @@
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([-0.14509451, 11.22459855,  9.34825703,  8.82330827])
 </code></pre></div></div>
 
-<h2 id="kernel-density-estimation-quantum-measurement-approach">Kernel density estimation: Quantum Measurement approach</h2>
+<h2 id="kernel-density-estimation-using-density-matrices">Kernel density estimation using Density Matrices</h2>
 
 <hr />
 
@@ -233,24 +222,22 @@
 <p>And letâ€™s recall that in order to generate random fourier features we must</p>
 
 <ol>
-  <li>Choose the number of Random Fourier Features $R$.</li>
-  <li>Draw $R$ samples ${\mathbf{w}_1,\dots,\mathbf{w}_R}$ from a <strong>gaussian distribution</strong> $\mathcal{N}(\mathbf{0},\mathbf{I_d})$ since Bochner theorem asserts that $K(\Delta) = \int exp(iw\Delta)p(w)dw$ and we know that under the Fourier transform, the Gaussian function is mapped to another Gaussian function with a different width.</li>
-  <li>Draw $R$ samples ${b_1,\dots,b_R}$ from an uniform distribution in $(0,2\pi)$.</li>
-  <li>Our desired random map will be $\phi_{rff}: \mathbb{R}^d \rightarrow \mathbb{R}^R$ such that
+  <li>Choose the number of Random Fourier Features \(R\).</li>
+  <li>Draw $R$ samples \(\{\mathbf{w}_1,\dots,\mathbf{w}_R\}\) from a <strong>gaussian distribution</strong> \(\mathcal{N}(\mathbf{0},\mathbf{I_d})\) since Bochner theorem asserts that \(K(\Delta) = \int exp(iw\Delta)p(w)dw\) and we know that under the Fourier transform, the Gaussian function is mapped to another Gaussian function with a different width.</li>
+  <li>Draw \(R\) samples \(\{b_1,\dots,b_R\}\) from an uniform distribution in \((0,2\pi)\).</li>
+  <li>Our desired random map will be \(\phi_{rff}: \mathbb{R}^d \rightarrow \mathbb{R}^R\) such that
 \(\phi_{rff}(\mathbf{x}) = \begin{pmatrix} \frac{1}{\sqrt{R}} \sqrt{2}cos(\mathbf{w_1^Tx }+b) \\ \vdots \\ \frac{1}{\sqrt{R}} \sqrt{2}cos(\mathbf{w_R^Tx }+b)\end{pmatrix}\)</li>
 </ol>
 
 <p>Notice that in order to build such map we need to do the following matching between math elements and variables in the constructor</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">input_dim</code> : $d$</li>
-  <li><code class="language-plaintext highlighter-rouge">dim</code> : $R$</li>
-  <li><code class="language-plaintext highlighter-rouge">gamma</code> : Bandwidth parameter of the internal gaussian distribution ?</li>
+  <li><code class="language-plaintext highlighter-rouge">input_dim</code> : \(d\)</li>
+  <li><code class="language-plaintext highlighter-rouge">dim</code> : \(R\)</li>
+  <li><code class="language-plaintext highlighter-rouge">gamma</code> : Bandwidth parameter of the internal gaussian distribution.</li>
 </ul>
 
-<p>Notice that at the end with end up with $\psi = $ <code class="language-plaintext highlighter-rouge">norm (tf.cos(w^tx +b)* tf.sqrt(2. / self.dim) ) / tf.expand_dims(norm(vector), axis=-1)</code>. ????</p>
-
-<p>Where is the map ???</p>
+<p>Notice that at the end with end up with \(\psi =\) <code class="language-plaintext highlighter-rouge">norm (tf.cos(w^tx +b)* tf.sqrt(2. / self.dim) ) / tf.expand_dims(norm(vector), axis=-1)</code>.</p>
 
 <p>Understand what <code class="language-plaintext highlighter-rouge">RBFSampler</code> does ? estimates the internal kernel ? Or the outside kernel ? Why to define such a big layer when you have a direct method that approximates the kernel using <code class="language-plaintext highlighter-rouge">RBFSampler</code>.</p>
 
@@ -289,7 +276,7 @@
 
 \[\rho = \frac{1}{N} \sum_i^Nz_iz_i^*\]
 
-<p>where N is the number of samples.</p>
+<p>where \(N\) is the number of samples.</p>
 
 <h3 id="training-a-qmdensity-model">Training a <code class="language-plaintext highlighter-rouge">QMDensity</code> model</h3>
 
@@ -370,14 +357,11 @@
 
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4/4 [==============================] - 0s 6ms/step
+<p><img src="/img/posts/Part2_DMKDE/DMKDE_40_2.png" alt="png" /></p>
 
+<h2 id="further-reading">Further reading</h2>
 
-
-
-
-[&lt;matplotlib.lines.Line2D at 0x7f3379765510&gt;]
-</code></pre></div></div>
-
-<p><img src="DMKDE_files/DMKDE_40_2.png" alt="png" /></p>
+<ul>
+  <li>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found at <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</li>
+</ul>
 :ET
