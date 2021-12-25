@@ -1,0 +1,91 @@
+I"�(<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>In <a href="/2021/12/22/Part1_DMKDE.html">Part 1</a> we checked at the key mathematical and statistical concepts that could allow us to talk about Kernel Density Estimation using Density Matrices. In Part 2, we would like to describe how to use the algorithm already implemented in Python by Professor <a href="https://dis.unal.edu.co/~fgonza/">Fabio Gonzalez</a> and his research group <a href="http://www.ingenieria.unal.edu.co/mindlab/">MindLab</a> at Universidad Nacional de Colombia using custom layers and models in <a href="https://www.tensorflow.org/">TensorFlow 2</a>.</p>
+
+<h2 id="install-qmc">Install <code class="language-plaintext highlighter-rouge">qmc</code></h2>
+
+<p>Let´s install the module <code class="language-plaintext highlighter-rouge">qmc</code> which contains</p>
+
+<ol>
+  <li><strong>Custom models</strong> inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.Model</code>, in our case we will use:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">QMDensity()</code></li>
+    </ul>
+  </li>
+  <li><strong>Custom layers</strong> inherited from the super class <code class="language-plaintext highlighter-rouge">tf.keras.layers.Layer</code>, we will take:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">QFeatureMapRFF()</code> layer of the quantum feature map.</li>
+      <li><code class="language-plaintext highlighter-rouge">QMeasureDensity()</code> layer that actually does the measurement.</li>
+    </ul>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">fagonzalezo</span><span class="o">/</span><span class="n">qmc</span><span class="p">.</span><span class="n">git</span>
+</code></pre></div></div>
+
+<p>For more information about <code class="language-plaintext highlighter-rouge">qmc</code> you can check <a href="https://github.com/fagonzalezo/qmc">this repository</a> which contains examples in estimation, classification and regression.</p>
+
+<h3 id="kernel-density-estimation-using-density-matrices">Kernel Density Estimation using Density Matrices</h3>
+
+<p>In order to measure how accurate the algorithm is let’s generate some random data from a two component Gaussian Mixture defined by the following density:</p>
+
+\[f (x) = \alpha\left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_1)^2}{2\sigma_1^2}\right)\right) + \left(1-\alpha \right) \left(\frac{1}{\sqrt{2\pi\sigma^2}}exp\left(\frac{(x-\mu_2)^2}{2\sigma_2^2}\right)\right).\]
+
+<p>For this we make use of <code class="language-plaintext highlighter-rouge">tfd.Mixture()</code> class and instanciate it as the object <code class="language-plaintext highlighter-rouge">bimix_gauss</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tfd</span> <span class="o">=</span> <span class="n">tfp</span><span class="p">.</span><span class="n">distributions</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">bimix_gauss</span> <span class="o">=</span> <span class="n">tfd</span><span class="p">.</span><span class="n">Mixture</span><span class="p">(</span>
+  <span class="n">cat</span><span class="o">=</span><span class="n">tfd</span><span class="p">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">probs</span><span class="o">=</span><span class="p">[</span><span class="n">alpha</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">]),</span>
+  <span class="n">components</span><span class="o">=</span><span class="p">[</span>
+    <span class="n">tfd</span><span class="p">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">tfd</span><span class="p">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">),</span>
+<span class="p">])</span>
+</code></pre></div></div>
+<p>then we generate a sample of size <code class="language-plaintext highlighter-rouge">100</code> by using the method <code class="language-plaintext highlighter-rouge">sample</code> and then convert it to a numpy array and assign it to <code class="language-plaintext highlighter-rouge">X</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">random_sample</span> <span class="o">=</span> <span class="n">bimix_gauss</span><span class="p">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="p">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">seed</span> <span class="o">=</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">random_sample</span><span class="p">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Notice that for this example we are working on a \(1D\) space, so each element of <code class="language-plaintext highlighter-rouge">X</code> belong to \(\mathbb{R}\) and the way the algorithm will recieve the whole sample is in a form of an array of shape <code class="language-plaintext highlighter-rouge">(n_samples , n_dimensions)</code> where the <code class="language-plaintext highlighter-rouge">n_dimensions</code> then will be 1. So, let’s reshape our data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Now we are ready to use the algorithm just by specifying:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dim</code> : Number of Random Fourier Features.</li>
+  <li><code class="language-plaintext highlighter-rouge">gamma</code>: Bandwidth related parameter.</li>
+</ul>
+
+<p>and then just using the custom models and layers in the following way.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Parameters
+</span><span class="n">n_rffs</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># Training
+</span><span class="n">rffmap_x</span> <span class="o">=</span> <span class="n">layers</span><span class="p">.</span><span class="n">QFeatureMapRFF</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">n_rffs</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">2021</span><span class="p">)</span>
+<span class="n">kde_dm</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">QMDensity</span><span class="p">(</span><span class="n">rffmap_x</span><span class="p">,</span> <span class="n">n_rffs</span><span class="p">)</span>
+<span class="n">kde_dm</span><span class="p">.</span><span class="nb">compile</span><span class="p">()</span>
+<span class="n">kde_dm</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Estimation
+</span><span class="n">densities</span> <span class="o">=</span> <span class="n">qmd</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</code></pre></div></div>
+<p>Note: There’s <strong>no optimization step</strong> on this methodology, when we use the method <code class="language-plaintext highlighter-rouge">fit()</code> the density matrix is calculated once and with this matrix we can estimate our densities using the method <code class="language-plaintext highlighter-rouge">predict()</code>. For illustrative purposes we used the same values in <code class="language-plaintext highlighter-rouge">X</code> for predicting its densities.</p>
+
+<h2 id="plotting">Plotting</h2>
+
+<p>We</p>
+
+<p><img src="/img/posts/Part2_DMKDE/DMKDE_40_2.png" alt="png" /></p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found at <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</li>
+</ul>
+:ET
