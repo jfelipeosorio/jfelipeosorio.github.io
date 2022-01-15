@@ -1,4 +1,4 @@
-I"'?<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"Ï@<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -115,7 +115,7 @@
 
 <h2 id="further-reading">Further reading</h2>
 
-<ul>
-  <li>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found at <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</li>
-</ul>
+<p>This <a href="https://arxiv.org/abs/2102.04394">paper</a> which describes on detail how density matrices can be used as a building block to build machine learning models exploiting their ability to straightforwardly combine linear algebra and probability. Novel methods are introduced such as <em>Density matrix kernel density classification</em>, <em>Quantum measurement classification</em>, <em>Quantum measurement regression</em>.</p>
+
+<p>More information on customization when using <code class="language-plaintext highlighter-rouge">tf</code> this can be found <a href="https://www.tensorflow.org/tutorials/customization/custom_layers#models_composing_layers">here</a>.</p>
 :ET
