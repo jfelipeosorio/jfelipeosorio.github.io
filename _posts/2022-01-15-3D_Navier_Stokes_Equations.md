@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "3D Navier-Stokes Equations"
-subtitle: "System of PDEs that govern fluids behaviour."
+subtitle: "System of PDEs that govern fluids behaviour"
 background: '' 
 ---
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
