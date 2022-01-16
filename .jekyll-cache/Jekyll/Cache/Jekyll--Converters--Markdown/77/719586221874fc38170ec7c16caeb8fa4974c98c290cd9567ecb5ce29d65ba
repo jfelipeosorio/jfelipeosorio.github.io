@@ -1,0 +1,47 @@
+I"T<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>In this post we just make a general description of the set of partial differential equations that govern fluid dynamics in space and time.</p>
+
+<h2 id="system-of-equations">System of equations</h2>
+
+<p>Here we write the equations that describe a <em>compressible</em>, <em>unsteady</em>, and <em>viscous</em> flow.</p>
+
+\[\frac{\partial \rho}{\partial t}+ \nabla\cdot\left(\rho \mathbf{u}\right)  = 0\]
+
+\[\frac{ \partial \rho \mathbf{u}}{\partial t} + \nabla\cdot\left(\rho \mathbf{u}\mathbf{u}\right) =  \nabla\cdot \overline{\overline \sigma} + \rho\mathbf{F}\]
+
+\[\frac{\partial \rho E}{\partial t} + \nabla\cdot\left(\rho\mathbf{u}E\right) = -\nabla\cdot\left(p\mathbf{u}\right) + \nabla\cdot\left(\overline{\overline\tau}\cdot\mathbf{u}\right) + \nabla\cdot\left(K \nabla T\right) + \rho \dot{q} + \rho \mathbf{F}\cdot\mathbf{u}\]
+
+<p>where the following two relations hold</p>
+
+\[p = \rho r T\]
+
+\[e = e(p,T)\]
+
+<p>The first three equations refer to the conservation of <strong>mass</strong>, <strong>momentum</strong> and <strong>energy</strong> of a fluid element moving in space and time respectively. And the two remaining equations are related to the <strong>equation of state of a perfect gas</strong> and the <strong>thermodynamics relationship that relates internal energy with pressure and temperature</strong>.</p>
+
+<p>Note that we end up with a system of \(7\) partial differential equations and \(7\) dependent variables (on \(\mathbf{x} = x\mathbf{e}_1+y\mathbf{e}_2+z\mathbf{e}_3\) and \(t\) since we are using a cartesian set of coordinates) which are:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Density</td>
+      <td>\(\rho\)</td>
+    </tr>
+    <tr>
+      <td>Velocity</td>
+      <td>\(\mathbf{u} = \mathbf{u}(\mathbf{x},t) = u\mathbf{e_1} + v\mathbf{e_2} + w\mathbf{e_3}= u_1\mathbf{e_1} + u_2\mathbf{e_2} + u_3\mathbf{e_3}\)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Compressibility shows up in the equations as an explicit dependence of density on space and time, and real effects of this might appear depending on the <a href="https://en.wikipedia.org/wiki/Mach_number">Mach number</a>. Unsteadiness is the time dependence of the unknowns in the equations. And viscosity refers in the equations to the viscous stress tensor \(\tau\) term which will be defined later.</p>
+
+<p>Notice that the independent variables for this problem are space coordinates \(x\), \(y\) \(z\) and time \(t\).</p>
+
+<h2 id="derivation">Derivation</h2>
+
+<p>The 3D Navier-Stokes equations follow from expressing the conservation of <strong>mass</strong>, <strong>momentum</strong>,and <strong>energy</strong> in a differential form. Normally, the expression of the conservation of a quantity \(\alpha\).</p>
+:ET
