@@ -54,7 +54,7 @@ Finally, the following quantities are assumed to be known:
 
 ## Derivation 
 
-The 3D Navier-Stokes equations follow from expressing the conservation of [**mass**](https://en.wikipedia.org/wiki/Conservation_of_mass), [**momentum**](https://www.sciencedirect.com/topics/earth-and-planetary-sciences/newton-second-law#:~:text=Newton's%20second%20law%20states%20that%20the%20rate%20of%20change%20of,is%20equated%20to%20the%20forces.),and [**energy**](https://en.wikipedia.org/wiki/Conservation_of_energy) in a differential form for a fluid element that moves in space and time. Normally, you end up from this process with an integral form of the equations and finally you apply [Reynolds transport theorem](https://en.wikipedia.org/wiki/Reynolds_transport_theorem) to express them in the [conservative](https://en.wikipedia.org/wiki/Conservation_form) form expressed in this post.
+The 3D Navier-Stokes equations follow from expressing the conservation of [**mass**](https://en.wikipedia.org/wiki/Conservation_of_mass), [**momentum**](https://www.sciencedirect.com/topics/earth-and-planetary-sciences/newton-second-law#:~:text=Newton's%20second%20law%20states%20that%20the%20rate%20of%20change%20of,is%20equated%20to%20the%20forces.),and [**energy**](https://en.wikipedia.org/wiki/Conservation_of_energy) in a differential form for a fluid element that moves in space and time. Normally, you end up from this process with an integral form of the equations and finally you apply [Reynolds transport theorem](https://en.wikipedia.org/wiki/Reynolds_transport_theorem) to express them in the differential [conservative](https://en.wikipedia.org/wiki/Conservation_form) form expressed in this post.
 
 
 ## Further reading
