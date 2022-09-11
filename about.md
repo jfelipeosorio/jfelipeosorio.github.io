@@ -17,8 +17,8 @@ Hey this is Juan Felipe! I enjoy studying theoretical machine learning and its a
 * Ph.D. in Applied Mathematics, 2022-2026(expected) @
 [Department of Applied Mathematics, University of Washington](https://amath.washington.edu/).
 
-* M.Sc. in Applied and Computational Mathematics, 2021-2022
-[Department of Applied Mathematics, University of Washington](https://amath.washington.edu/).
+* M.Sc. in Applied and Computational Mathematics, 2021-2022 @
+ [Department of Applied Mathematics, University of Washington](https://amath.washington.edu/).
 
 * B.Sc. in Statistics, 2017-2021 @ [Department of Statistics, Universidad Nacional de Colombia](http://ciencias.bogota.unal.edu.co/departamentos/departamento-de-estadistica/el-departamento/).
 
