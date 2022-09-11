@@ -7,7 +7,7 @@ background: '/img/bg-about.jpg'
 
 <img style="float: left;" src="/img/about/meabout.jpeg" width="13%" height="13%"/>
 
-Hey this is Juan Felipe! I enjoy studying theoretical machine learning and its applications in applied mathematics. I will start my PhD studies at the Department of Applied Mathematics. I love weightlifting and enjoy watching sports in general. 
+Hey this is Juan Felipe! I enjoy studying theoretical machine learning and its applications in solving PDEs. I will start my PhD studies at the Department of Applied Mathematics this fall 2022. I love weightlifting and enjoy watching sports in general. 
 
 
 
