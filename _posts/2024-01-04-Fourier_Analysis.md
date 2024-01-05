@@ -15,7 +15,7 @@ Consider the operator
 $$
 \begin{align*}
   \mathcal{F} \colon L^1(\mathbb{T}^n) &\to l^\infty\left(\mathbb{Z}^n\right) \\
-  f &\mapsto \mathcal{F} f \coloneqq \frac{1}{2 \pi} \int_{\mathbb{T}^n} f(\theta) e^{-i k \cdot \theta} d\theta.
+  f &\mapsto \mathcal{F} f := \frac{1}{2 \pi} \int_{\mathbb{T}^n} f(\theta) e^{-i k \cdot \theta} d\theta.
 \end{align*}
 $$
 
