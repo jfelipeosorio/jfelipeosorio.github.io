@@ -5,7 +5,7 @@ description:
 background: '/img/bg-about.jpg'
 ---
 
-<img style="float: left;" src="/img/about/meabout.jpeg" width="13%" height="13%"/>
+<img style="float: left;" src="/img/about/meabout.jpeg" width="20%" height="20%"/>
 
 Hey this is Juan Felipe! I enjoy studying theoretical machine learning and its applications in solving or learning PDEs. I'm a second year PhD student at the Department of Applied Mathematics at the University of Washington under the supervision of Prof. [Bamdad Hosseini](https://bamdadhosseini.org/).
 
