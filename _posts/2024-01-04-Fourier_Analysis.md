@@ -12,6 +12,7 @@ In this post we give some definitions and points out important facts about one o
 ## Fourier series
 
 Consider the operator
+
 $$
 \begin{align*}
   \mathcal{F} \colon L^1(\mathbb{T}^n) &\to l^\infty\left(\mathbb{Z}^n\right) \\
