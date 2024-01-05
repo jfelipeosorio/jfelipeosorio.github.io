@@ -32,5 +32,5 @@ I do weightlifting in my free time and also enjoy dancing.
 
 * Agredo, Julián & Leon, Y. & Osorio, J. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
 
-* Gallego, J.A., Osorio, J.F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see pre-print](https://arxiv.org/abs/2208.01206)
+* Gallego, J.A., Osorio, J.F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see here](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
 
