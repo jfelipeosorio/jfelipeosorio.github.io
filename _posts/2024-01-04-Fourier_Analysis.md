@@ -23,6 +23,8 @@ $$
 
 where $$k = (k_1,\dots,k_n)$$, $$\langle \cdot,\cdot\rangle$$ is the usual inner product in $$\mathbb{R}^n$$ and $$l^\infty\left(\mathbb{Z}^n\right) = \{g: \left \lVert g \right \rVert _\infty < \infty \}$$. Using the above notation we have transformed a function $$f$$ whose argument belongs to a continuous bounded set, namely, $$\mathbb{T}^n$$, into a new function $$Ff := \hat f$$ whose argument belongs to a discrete set (where if $$n=1$$ then the function itself is a real sequence). 
 
+Additionally, if we know that the function $$f$$ is smooth, i.e., $$f: C^{\infty}\to \mathbb{R}$$, we can integrate by parts and now have a stronger definition
+
 
 $$\frac{\partial \rho}{\partial t}+ \nabla\cdot\left(\rho \mathbf{u}\right)  = 0$$
 
