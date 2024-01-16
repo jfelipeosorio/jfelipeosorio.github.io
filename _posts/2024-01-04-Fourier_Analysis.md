@@ -20,7 +20,7 @@ $$
 \end{align*}
 $$
 
-where $$l^\infty\left(\mathbb{Z}^n\right) = {g: \left \lVert g \right \rVert _\infty < \infty }$$. Using the above notation we have transformed $$f$$ taking values in a continuous bounded set into a new function $Ff := \hat f$ taking values in a discrete set. 
+where $$l^\infty\left(\mathbb{Z}^n\right) = \{g: \left \lVert g \right \rVert _\infty < \infty \}$$. Using the above notation we have transformed $$f$$ taking values in a continuous bounded set into a new function $Ff := \hat f$ taking values in a discrete set. 
 
 
 $$\frac{\partial \rho}{\partial t}+ \nabla\cdot\left(\rho \mathbf{u}\right)  = 0$$
