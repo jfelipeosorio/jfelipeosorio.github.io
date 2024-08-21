@@ -12,7 +12,7 @@ background: '/img/bg-about.jpg'
 \
 \
 \
-Hey this is Juan Felipe! I enjoy studying mathematics of data science and its applications in solving or learning PDEs. I'm a third year PhD student at the Department of Applied Mathematics at the University of Washington under the supervision of Prof. [Bamdad Hosseini](https://bamdadhosseini.org/).
+Hey this is Juan Felipe Osorio Ramirez. I enjoy studying mathematics of data science and its applications in solving or learning PDEs. I'm a third year PhD student at the Department of Applied Mathematics at the University of Washington and I am fortunate to work under the supervision of Prof. [Bamdad Hosseini](https://bamdadhosseini.org/).
 \
 \
 \
@@ -61,9 +61,9 @@ My current research includes:
 
 **Conferences/Posters/Workshops**
 
-* 24-SU-(P): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bat
+* 24-SU-(P): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bath, UK.
 
-* 24-WI-(C): Kernel methods for learning PDEs at SIAM UQ 24. Trieste, Italy.
+* 24-WI-(C): Kernel methods for learning PDEs at SIAM UQ 24. Italy.
 
 * 23-SU-(W): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [here](https://github.com/jfelipeosorio/sciML).
 
