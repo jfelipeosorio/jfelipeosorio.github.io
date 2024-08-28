@@ -1,0 +1,164 @@
+I"�(<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>A powerful set of methods in machine learning arise from the use of kernels. One of the main results from these include the so-called <em>representer theorem</em> which allows us make tracktacle the inference of a desired approximation function. In this post we will discuss the math behind the proofs of the representer theorem and its generalizations.</p>
+
+<h2 id="classical-representer-theorem">Classical representer theorem</h2>
+
+<p>Let \(K\) be a reproducing kernel, and denote by \(\mathcal{H}_K\) its <a href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space">RKHS</a>. Suppose \(\mathcal{X}\) be a non-empty set and that we are given:</p>
+
+<ul>
+  <li>
+    <p>Data set: \(\left\{(x_i,y_i)\right\}_{i=1}^{N}\subset \mathcal{X} \times \mathbb{R}\) where \(d\geq 1\) and \(N &gt; 1\).</p>
+  </li>
+  <li>
+    <p>Cost function: \(L :(\mathbb{R}^d \times \mathbb{R} \times \mathbb{R})^N \to \mathbb{R} \cup \{\infty\}\).</p>
+  </li>
+  <li>
+    <p>Strictly monotonically increasing function: \(g : [0,\infty) \to \mathbb{R}\).</p>
+  </li>
+</ul>
+
+<p>then any element from the set</p>
+
+\[\underset{f\in\mathcal{H}_K}{\text{argmin }} L\left(\left(x_i,y_i,f(x_i)\right)_{i=1}^N\right) + g(\|f\|_{\mathcal{H}_K})\]
+
+<p>is of the form</p>
+
+\[f(\cdot) = \sum_{i=1}^N \beta_i K(\cdot,x_i)\]
+
+<p>where \(\beta \in \mathbb{R}^N\).</p>
+
+<p><em>Proof:</em> Since the set \(H_0 = \text{span}\{K(\cdot,x_1),\dots,K(\cdot,x_N)\}\) is isomorphic to \(\mathbb{R}^N\) (which is complete), then it is a closed subspace of \(\mathcal{H}_K\) so</p>
+
+\[\mathcal{H}_K = H_0 \oplus H_0^\perp.\]
+
+<p>Thus, if \(f\in \mathcal{H}_K\) then there exists \(\beta \in \mathbb{R}^N\) and \(w \in H_0^\perp\) such that</p>
+
+\[f(\cdot) = \sum_{i=1}^N \beta_i K(\cdot,x_i) + w(\cdot).\]
+
+<p>Notice that for any \(j\in\{1,\dots,N\}\) we have</p>
+
+\[f(x_j) = \sum_{i=1}^N \beta_i K(x_j,x_i) + w(\cdot) = \sum_{i=1}^N \beta_i \langle K(x_j,\cdot),K(\cdot,x_i) \rangle + \langle w,K(\cdot,x_i) \rangle\]
+
+<p>The parametric approach to density estimation given some data \(\mathbf{x}_1,\dots,\mathbf{x}_N\) assumes that each \(\mathbf{x}_i\) is sampled independently from a random vector \(\mathbf{X}\sim f(\mathbf{x};\mathbf{\theta})\) and the theory is developed around building an estimator \(\hat{\mathbf{\theta}}\) with good statistical properties such us unbiasdness, consistency, efficiency and sufficiency. The probability density of a new sample \(\mathbf{x}\) is given by:
+\[
+\hat{f}(\mathbf{x}) = f(\mathbf{x};\hat{\mathbf{\theta}})
+\]</p>
+
+<p>Another approach to get density estimations in new samples in a non-parametric fashion is KDE and it can be understood as a weighted sum of density contributions that are centered at each data point. Formally, given a univariate random sample \(X_1,...,X_N\) from an unknown distribution with density \(f\), the KDE estimator of the density at a query point \(x\in\mathbb{R}\) is given by</p>
+
+<p>\[
+    \hat{f}(x) = \frac{1}{Nh}\sum_{i=1}^N K\left(\frac{x-X_i}{h}\right).
+\]</p>
+
+<p>where \(h\) is called the <em>bandwidth</em> and \(K:\mathbb{R}\rightarrow \mathbb{R}_{\geq 0}\) is a positive definite function and its called the <em>kernel function</em>.</p>
+
+<p>Notice that a naive direct evaluation of KDE at \(m\) query points for \(N\) samples requires \(O(mN)\) kernel evaluations and \(O(mN)\) additions and multiplications. Also if we restrict to \(N\) query points then we get a computational complexity of \(O(N^2)\), making it a very expensive trade-off, especially for large data sets and higher dimensions (see more <a href="https://link.springer.com/book/10.1007/978-3-319-71688-6">here</a>).</p>
+
+<p>According to <a href="https://proceedings.mlr.press/v97/siminelakis19a.html">Siminelakis</a>, one technique to resolve the problem of scalability of the naïve evaluation of KDE in the literature is on discovering fast approximate evaluation of the kernel, and there are two primary lines of effort: space partitioning methods and Monte Carlo random sampling.</p>
+
+<p>The formalism of density operators and density matrices was developed by Von Neumann as a foundation of quantum statistical mechanics.  From the pointof view of machine learning,  density matrices have an interesting feature: the fact that they combine linear algebra and probability, two of the pillars of machine learning, in a very particular but powerful way.</p>
+
+<p>The central idea of this post is to use density matrices to represent probability distributions tackling the important drawback of scalability and create a competitive strategy to compute densities on new samples.</p>
+
+<p>Now let’s define and discuss important mathematical background for the method.</p>
+
+<h2 id="multivariate-version-of-kernel-density-estimation">Multivariate version of Kernel Density Estimation</h2>
+
+<p>The multivariate kernel density estimator at a query point \(\mathbf{x}\in\mathbb{R}^d\) for a given random sample \(\mathbf{X}_1,\dots,\mathbf{X}_N\) drawn from an unknown density \(f\) is given by</p>
+
+\[\hat{f}_\gamma(\mathbf{x})=\frac{1}{N(\pi / \gamma)^{\frac{d}{2}}} \sum_{i=1}^{N} \exp \left({-\gamma\left\|\mathbf{x}-\mathbf{X}_{i}\right\|^{2}}\right)\]
+
+<p>where we define \(\gamma = \frac{1}{2\sigma}\) and assume a Gaussian kernel.</p>
+
+<h2 id="random-fourier-features">Random Fourier Features</h2>
+
+<p>The use of Random Fourier Features (RFF) was explicitly introduced by <a href="https://people.eecs.berkeley.edu/~brecht/papers/07.rah.rec.nips.pdf">Rahimi and Recht</a> in 2007. In this methodology authors approximate a shift invariant kernel by an inner product in an explicit Hilbert space. Formally, given a shift-invariant kernel \(k: \mathbb{R}^d\times\mathbb{R}^d \rightarrow \mathbb{R}\) they build a map \(\phi_{\text{rff}} : \mathbb{R}^d \rightarrow \mathbb{R}^D\) such that</p>
+
+<p>\[
+k(\mathbf{x},\mathbf{y}) \approx \phi_{\text{rff}}(\mathbf{x})^T \phi_{\text{rff}}(\mathbf{y})
+\]</p>
+
+<p>for all \(\{\mathbf{x},\mathbf{y}\}\subseteq \mathbb{R}^d\). The main theoretical result that supports the last equation comes from an instance of <a href="https://en.wikipedia.org/wiki/Bochner%27s_theorem">Bochner’s theorem</a> which shows that a shift invariant positive-definite kernel \(k\) is the Fourier transform of a probability measure \(p\). Specifically, to approximate the integral in the Fourier transform we sample \(\mathbf{\omega}_1,\dots,\mathbf{\omega}_D\) from \(p\) and \(b_1,\dots,b_D\) from a uniform distribution in the interval \((0,2\pi)\) to define the map \(\phi_{\text{rff}}:\mathbb{R}^d\rightarrow\mathbb{R}^D\) as</p>
+
+<p>\[
+    \phi_{\text{rff}}(\mathbf{x})=\left(
+\frac{1}{\sqrt{D}} \sqrt{2} \cos \left(\boldsymbol{\omega}_1^{\top} \mathbf{x}+b_1\right),
+\dots,
+\frac{1}{\sqrt{D}} \sqrt{2} \cos \left(\boldsymbol{\omega}_D^{\top} \mathbf{x}+b_D\right)
+\right)^T
+\]</p>
+
+<p>Rahimi and Recht also showed that the expected value of \(\phi_{\text{rff}}(\mathbf{x})\phi_{\text{rff}}^T(\mathbf{y})\) uniformly converges to \(k(\mathbf{x}, \mathbf{y})\). In general, we can reduce the complexity of kernel methods using this methodology because kernel evaluations are faster.</p>
+
+<h2 id="density-matrices">Density Matrices</h2>
+
+<p>The state of a quantum system is represented by a vector \(\varphi\in\mathcal{H}\) where \(\mathcal{H}\) is the Hilbert space of the possible states
+of the system and typically \(H=\mathbb{C}^d\).</p>
+
+<p>Let’s considerer the example of the spin of an electron. The state vector is given by</p>
+
+<p>\[
+    \varphi = (\alpha,\beta)^T, \quad \lVert \alpha \rVert^2+\lVert \beta \rVert^2=1
+\]</p>
+
+<p>In general, the quantum state vector is a combination of basis states and this is called <em>superposition</em>. In the example the basis states are</p>
+
+<p>\[
+    \uparrow := (1,0)^T, \quad \downarrow :=(0,1)^T
+\]</p>
+
+<p>with \(\lVert \alpha \rVert^2\) and \(\lVert \beta  \rVert^2\) being the probabilities of obtaining the corresponding basis state. A <em>density matrix</em> is a representation of the state of a quantum system that can represent quantum uncertainty (superposition) and classical uncertainty. We can express the state of the quantum system in one of two ways, depending on whether or not there is classical uncertainty:</p>
+
+<p>i) Pure : \(\rho = \psi \psi^{*}=\begin{pmatrix}
+\lVert \alpha \rVert^{2} &amp; \alpha \beta^{*} \\
+\beta^{*} \alpha &amp; \lVert \beta \rVert^{2}
+\end{pmatrix}\)</p>
+
+<p>ii) Mixed : \(\rho=\sum_{i=1}^{N} p_{i} \varphi_{i} \varphi_{i}^{*};\quad p_i\geq 0;\quad \sum_{i=1}^{N} p_{i}=1\)</p>
+
+<h2 id="method-kde-using-density-matrices">Method: KDE using Density Matrices</h2>
+
+<ul>
+  <li>
+    <p>Input. An observation of a \(d\)-dimensional random sample \(\mathbf{x}_1,\dots,\mathbf{x}_N\), number of random Fourier features  \(D\in\mathbb{N}\) and spread parameter \(\gamma\in\mathbb{R}_{&gt; 0}\).</p>
+  </li>
+  <li>
+    <p>Generate an observation \(\mathbf{\omega}_1,\dots,\mathbf{\omega}_N\) of a random sample of \(\mathbf{\omega}\sim N(\mathbf{0},\mathbf{I}_D)\) and an observation \(b_1,\dots,b_N\) of a random sample of \(b\sim\text{Uniform}(0,2\pi)\) for building the map \(\phi_{\text{rff}}\) from the random Fourier features method to approximate a Gaussian kernel with parameters \(\gamma\) and \(D\).</p>
+  </li>
+  <li>
+    <p>Apply \(\phi_{\text{rff}}\) to each element \(\mathbf{x}_i\):</p>
+  </li>
+</ul>
+
+\[\mathbf{z}_i = \phi_{\text{rff}}(\mathbf{x}_i)\]
+
+<ul>
+  <li>
+    <p>Calculate mixed state density matrix:
+\[
+  \rho = \frac{1}{N}\sum_{i=1}^N \mathbf{z}_i \mathbf{z}_i^T
+\]</p>
+  </li>
+  <li>
+    <p>The density estimation of a query point \(\mathbf{x}\) is calculated using Born’s rule</p>
+  </li>
+</ul>
+
+\[\hat{f}_{\rho}(\mathbf{x})=\frac{\operatorname{Tr}\left(\rho \phi_{\mathrm{rff}}(\mathbf{x}) \phi_{\mathrm{rff}}(\mathbf{x})^{T}\right)}{\mathcal{Z}}=\frac{\phi_{\mathrm{rff}}(\mathbf{x})^{T} \rho \phi_{\mathrm{rff}}(\mathbf{x})}{\mathcal{Z}}\]
+
+<p>where the normalizing constant is given by:</p>
+
+<p>\[
+\mathcal{Z}=\left(\frac{\pi}{2 \gamma}\right)^{\frac{d}{2}}
+\]</p>
+
+<p>We call \(\hat f_\rho(\mathbf{x})\) the <em>DMKDE</em> estimation at \(\mathbf{x}\).</p>
+
+<h2 id="what-is-next">What is next?</h2>
+
+<p>See implementation in <a href="/2021/12/23/Part2_DMKDE.html">Part 2</a>.</p>
+
+:ET
