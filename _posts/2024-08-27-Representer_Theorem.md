@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Representer theorem"
-subtitle: "How general can we state the theorem?"
+title: "Representer theorems"
+subtitle: "Different setups"
 background: 
 ---
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -50,7 +50,7 @@ $$
 f(x_j) = \sum_{i=1}^N \beta_i K(x_j,x_i) + w(x_j) = \sum_{i=1}^N \beta_i K(x_j,x_i)  + \langle w,K(x_j,\cdot) \rangle = \sum_{i=1}^N \beta_i K(x_j,x_i) 
 $$
 
-which means that when we evaluate $$f$$ at any of the training points we only care about the first part, i.e., $$f(x_j)$$ does not depend on evaluating $$w$$ at $x_j$, and we conclude that $$L\left(\left(x_i,y_i,f(x_i)\right)_{i=1}^N\right)$$ does not depend on $$w(x_j)$$. On the other hand, notice that
+which means that when we evaluate $$f$$ at any of the training points we only care about the first part, i.e., $$f(x_j)$$ does not depend on evaluating $$w$$ at $$x_j$$, and we conclude that $$L\left(\left(x_i,y_i,f(x_i)\right)_{i=1}^N\right)$$ does not depend on $$w(x_j)$$. On the other hand, notice that
 
 $$
 \begin{align*}
@@ -63,7 +63,7 @@ g(\|f\|_{\mathcal{H}_K}) &= g(\|\sum_{i=1}^N \beta_i K(\cdot,x_i) + w(\cdot)\|_{
 \end{align*}
 $$
 
-where we have use the properties of $$g$$ being monotonically strictly increasing and $$v \in H_0^\perp$$.
+where we have use the properties of $$g$$ being monotonically strictly increasing and $$w \in H_0^\perp$$.
 
 Thus, we just saw that if we choose $$w \equiv 0$$ then we always solve for the variational problem meaning that we must have that any minimizer is of the form 
 
@@ -71,6 +71,113 @@ $$f(\cdot) = \sum_{i=1}^N \beta_i K(\cdot,x_i) $$
 
 where $$\beta \in \mathbb{R}^N$$.
 
+## Interpolation version (discrete)
+
+We usually assume that our pair of observations $$\{(x_i,y_i)\}_{i=1}^N$$ have the following functional dependency 
+
+$$
+y_i = f^\dagger(x_i) \quad \text{ for all } \quad i \in \{1,\dots,N\}
+$$
+
+so that we would like to find an approximation to $$f^\dagger$$ by solving
+
+$$
+\underset{f\in\mathcal{H}_K}{\text{argmin }} \|f\|_{\mathcal{H}_K} \quad \text{ s.t. } \quad f(x_i) = f^\dagger(x_i) \quad \forall i\in\{1,\dots,N\}
+$$
+
+whose solution according to the classical result is of the form
+
+$$
+\hat f(x) = \sum_{i=1}^N K(x,x_i) \beta_i
+$$
+
+for some $$\beta \in \mathbb{R}^N$$ that satisfies the linear system
+
+$$
+\sum_{i=1}^N K(x_i,x_j) \beta_i = f(x_i) \quad \text{for all}\quad j \in \{1,\dots,N\}.
+$$
+
+To see the last statement about $$\beta$$, we just need to remember that $$\hat f$$ satisfies the interpolation constraints.
+
+## Interpolation version (continuous)
+
+We have access to $$\{(x,y):x\in \Omega \text{ and } y \in \mathbb{R}\} \subset \mathcal{X} \times \mathbb{R}$$ and we assume they follow the functional dependency 
+
+$$
+y = f^\dagger(x) \quad \text{ for all } \quad x \in \Omega
+$$
+
+so that we would like to find an approximation to $$f^\dagger$$ by solving
+
+$$
+\underset{f\in\mathcal{H}_K}{\text{argmin }} \|f\|_{\mathcal{H}_K} \quad \text{ s.t. } \quad f(x) = f^\dagger(x)\quad \forall x\in\Omega
+$$
+
+whose solution (to be proven) is of the form
+
+$$
+\hat f(x) = \int_{\Omega} K(x,y) \beta(y) dy
+$$
+
+for some function $$\beta \in \mathbb{R}^\Omega$$ that satisfies the integral equation
+
+$$
+\int_{\Omega} K(x,y) \beta(y) dy = f(x) \quad \text{for all}\quad x \in \Omega.
+$$
+
+*Proof*: Since the set
+
+$$H_0 = \left\{h \in \mathcal{H}_K| \exists \beta \in \mathbb{R}^{\Omega} : h(\cdot) = \int_\Omega K(\cdot,x)\beta(x)dx\right\}$$
+
+is a closed (why?) subspace of $$\mathcal{H}_K$$ so 
+
+$$
+\mathcal{H}_K = H_0 \oplus H_0^\perp.
+$$
+
+Thus, if $$f\in \mathcal{H}_K$$ then there exists $$\beta(y) \in \mathbb{R}^\Omega$$ and $$w \in H_0^\perp$$ such that
+
+$$
+f(\cdot) = \int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot).
+$$
+
+Notice that for any $$y \in \Omega$$ we have
+
+$$
+
+f(y) = \int_\Omega K(y,x)\beta(x)dx + w(y) = \int_\Omega K(y,x)\beta(x)dx  + \langle w,K(y,\cdot) \rangle = \int_\Omega K(y,x)\beta(x)dx 
+$$
+
+which means that when we evaluate $$f$$ at any of the training points we only care about the first part, i.e., $$f(y)$$ does not depend on evaluating $$w$$ at $$y$$.
+
+On the other hand if we assume that $$\beta$$ is the Radon-Nikodym derivative of an induced measure $$\mu$$ with respect to some base measure(could be Lebesgue for continuous random variables ?), notice that
+
+$$
+\begin{align*}
+\|f\|_{\mathcal{H}_K} &= \|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K} \\
+&= (\|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K}^2)^{1/2} \\
+&= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2 + 2 \langle \int_\Omega K(\cdot,x)\beta(x)dx, w(\cdot) \rangle )^{1/2} \\
+&= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2  + 2\mathbb{E}_{\mu}(w))^{1/2} \\
+&\geq (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 )^{1/2}\\
+&= \|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K} 
+\end{align*}
+$$
+
+where we have use the properties of $$g$$ being monotonically strictly increasing and $$w \in H_0^\perp$$.
+
+Thus, we just saw that if we choose $$w \equiv 0$$ then we always solve for the variational problem meaning that we must have that any minimizer is of the form 
+
+$$f(\cdot) = \int_\Omega K(\cdot,x)\beta(x)dx = \int_\Omega K(\cdot,x)d\mu(x)$$ 
+
+where $$\beta \in \mathbb{R}^\Omega$$ is the density of a measure $$\mu$$. $$\quad \square$$.
+
+Note: Another approch is studying the approximating power of the set
+
+$$
+K(Z):=\overline{\operatorname{span}}(k(x, \cdot), x \in Z)
+$$
+
+to the set of continuous functions $$C(Z)$$ with the sup norm as it is done [here](https://thomaszh3.github.io/writeups/RKHS.pdf) for universal kernels.
 
 
 
