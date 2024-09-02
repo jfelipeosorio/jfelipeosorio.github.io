@@ -94,7 +94,7 @@ $$
 for some $$\beta \in \mathbb{R}^N$$ that satisfies the linear system
 
 $$
-\sum_{i=1}^N K(x_i,x_j) \beta_i = f(x_i) \quad \text{for all}\quad j \in \{1,\dots,N\}.
+\sum_{i=1}^N K(x_i,x_j) \beta_i = y_i \quad \text{for all}\quad j \in \{1,\dots,N\}.
 $$
 
 To see the last statement about $$\beta$$, we just need to remember that $$\hat f$$ satisfies the interpolation constraints.
@@ -122,7 +122,7 @@ $$
 for some function $$\beta \in \mathbb{R}^\Omega$$ that satisfies the integral equation
 
 $$
-\int_{\Omega} K(x,y) \beta(y) dy = f(x) \quad \text{for all}\quad x \in \Omega.
+\int_{\Omega} K(x,y) \beta(y) dy = f^\dagger(x) \quad \text{for all}\quad x \in \Omega.
 $$
 
 *Proof*: Since the set
@@ -179,9 +179,69 @@ $$
 
 to the set of continuous functions $$C(Z)$$ with the sup norm as it is done [here](https://thomaszh3.github.io/writeups/RKHS.pdf) for universal kernels.
 
+##  Linear PDE constrained problem (discrete)
 
+Let $$\mathcal{L}$$ be a linear differential operator. We are given pair of observations $$\{(x_i,g(x_i))\}_{i=1}^N$$ having the following functional dependency 
 
+$$
+\mathcal{L}f^\dagger(x_i) = g(x_i)\quad \text{ for all } \quad i \in \{1,\dots,N\}
+$$
 
+so that we would like to find an approximation to $$f^\dagger$$ by solving
+
+$$
+\underset{f\in\mathcal{H}_K}{\text{argmin }} \|f\|_{\mathcal{H}_K} \quad \text{ s.t. } \quad \mathcal{L}f(x_i) = g(x_i) \quad \forall i\in\{1,\dots,N\}
+$$
+
+whose solution is of the form
+
+$$
+\hat f(x) = \sum_{i=1}^N \mathcal{L}_y K(x,y)\Big|_{y=x_i} \beta_i
+$$
+
+for some $$\beta \in \mathbb{R}^N$$ that satisfies the linear system
+
+$$
+\mathcal{L}_x \left(\sum_{i=1}^N \mathcal{L}_y K(x,y)\Big|_{y=x_i} \beta_i\right)\Big|_{x=x_j} = g(x_j) \quad \text{for all}\quad j \in \{1,\dots,N\}.
+$$
+
+which reduces to
+
+$$
+\sum_{i=1}^N \mathcal{L}_x\mathcal{L}_y K(x,y)\Big|_{x=x_j,y=x_i} \beta_i = g(x_j) \quad \text{for all}\quad j \in \{1,\dots,N\}.
+$$
+
+##  Linear PDE constrained problem (continuous)
+
+Let $$\mathcal{L}$$ be a linear differential operator. We are given pair of observations $$\{(x,g(x)):x\in \Omega\} \subset \mathcal{X} \times \mathbb{R}$$ having the functional dependency  
+
+$$
+\mathcal{L}f^\dagger(x) = g(x)\quad \text{ for all } x \in \Omega
+$$
+
+so that we would like to find an approximation to $$f^\dagger$$ by solving
+
+$$
+\underset{f\in\mathcal{H}_K}{\text{argmin }} \|f\|_{\mathcal{H}_K} \quad \text{ s.t. } \quad \mathcal{L}f(x) = g(x) \quad \forall x\in \Omega
+$$
+
+whose solution is of the form
+
+$$
+\hat f(x) = \int_\Omega \mathcal{L}_y K(x,y) \beta(y) dy
+$$
+
+for some $$\beta \in \mathbb{R}^\Omega$$ that satisfies the integral equation
+
+$$
+\mathcal{L}_x \left(\int_\Omega \mathcal{L}_y K(x,y) \beta(y) dy\right)= g(x) \quad \text{for all}\quad x \in \Omega.
+$$
+
+which reduces to
+
+$$
+\int_\Omega \mathcal{L}_x\mathcal{L}_y K(x,y) \beta(y) dy = g(x) \quad \text{for all}\quad x \in \Omega.
+$$
 
 ## References:
 
