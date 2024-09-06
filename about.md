@@ -23,7 +23,7 @@ My current research includes:
 - Solving Keller-Segle type equations using kernel methods.
 - Measure transport with some imaging applications.
 
-
+During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
 
 **Education**
 
