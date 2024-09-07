@@ -1,4 +1,4 @@
-I"ß(<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I")<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -103,7 +103,7 @@ g(\|f\|_{\mathcal{H}_K}) &amp;= g(\|\sum_{i=1}^N \beta_i K(\cdot,x_i) + w(\cdot)
 
 \[H_0 = \left\{h \in \mathcal{H}_K| \exists \beta \in \mathbb{R}^{\Omega} : h(\cdot) = \int_\Omega K(\cdot,x)\beta(x)dx\right\}\]
 
-<p>is a closed (why?) subspace of \(\mathcal{H}_K\) so</p>
+<p>is a closed (because of weak convergence) subspace (since \(K(\cdot,x) \in \mathcal{H}_K\)) of \(\mathcal{H}_K\) so</p>
 
 \[\mathcal{H}_K = H_0 \oplus H_0^\perp.\]
 

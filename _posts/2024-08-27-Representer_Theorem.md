@@ -129,7 +129,7 @@ $$
 
 $$H_0 = \left\{h \in \mathcal{H}_K| \exists \beta \in \mathbb{R}^{\Omega} : h(\cdot) = \int_\Omega K(\cdot,x)\beta(x)dx\right\}$$
 
-is a closed (why?) subspace of $$\mathcal{H}_K$$ so 
+is a closed (because of weak convergence) subspace (since $$K(\cdot,x) \in \mathcal{H}_K$$) of $$\mathcal{H}_K$$ so 
 
 $$
 \mathcal{H}_K = H_0 \oplus H_0^\perp.
@@ -157,7 +157,7 @@ $$
 \|f\|_{\mathcal{H}_K} &= \|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K} \\
 &= (\|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K}^2)^{1/2} \\
 &= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2 + 2 \langle \int_\Omega K(\cdot,x)\beta(x)dx, w(\cdot) \rangle )^{1/2} \\
-&= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2  + 2\mathbb{E}_{\mu}(w))^{1/2} \\
+&= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2  \\
 &\geq (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 )^{1/2}\\
 &= \|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K} 
 \end{align*}
