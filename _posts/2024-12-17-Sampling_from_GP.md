@@ -11,7 +11,9 @@ Given a Gaussian Process (GP) specified by its mean and kernel (covariance) func
 
 ## Let's use properties of Gaussian random vectors
 
-Let 
+Let $\xi \sim N(0,C)$ and $Z \sim N(0,I)$. Then notice that
+
+$$\xi \overset{d}{=} C^{1/2} Z$$.
 
 
 Let $$K$$ be a reproducing kernel, and denote by $$\mathcal{H}_K$$ its [RKHS](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space). Suppose $$\mathcal{X}$$ be a non-empty set and that we are given:
