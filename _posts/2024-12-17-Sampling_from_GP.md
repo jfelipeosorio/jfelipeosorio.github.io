@@ -11,7 +11,7 @@ Given a Gaussian Process (GP) specified by its mean and kernel (covariance) func
 
 ## Let's use properties of Gaussian random vectors
 
-Let $\xi \sim N(0,C)$ and $Z \sim N(0,I)$. Then notice that
+Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Then notice that
 
 $$\xi \overset{d}{=} C^{1/2} Z$$.
 
@@ -252,10 +252,9 @@ $$
 
 - For the classical result we refer to 
 
-> G. S. Kimeldorf and G. Wahba. Some results on Tchebycheffian spline functions.
-J. Math. Anal. Applic., 33:82–95, 1971.
+> [1] Kanagawa, Motonobu, et al. "Gaussian processes and kernel methods: A review on connections and equivalences." arXiv preprint arXiv:1807.02582 (2018).
 
-> Schölkopf, Bernhard; Herbrich, Ralf; Smola, Alex J. (2001). "A Generalized Representer Theorem". In Helmbold, David; Williamson, Bob (eds.). Computational Learning Theory. Lecture Notes in Computer Science. Vol. 2111. Berlin, Heidelberg: Springer. pp. 416–426
+> [2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.
 
 
 
