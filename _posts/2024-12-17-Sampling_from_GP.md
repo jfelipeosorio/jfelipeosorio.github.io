@@ -13,11 +13,19 @@ Given a Gaussian Process (GP) specified by its mean and kernel (covariance) func
 
 Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Notice that if we Cholesky factorize $$C = C^{1/2} (C^{1/2})^\top$$ we also have $$\xi \sim N(0,C^{1/2} (C^{1/2})^\top)$$ meaning that 
 
-$$\xi \overset{d}{=} C^{1/2} Z$$.
+$$
+\begin{align*}
+\xi \overset{d}{=} C^{1/2} Z
+\end{align*}
+$$.
 
 If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before ids given by 
 
-$$C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z$$.
+$$
+\begin{align*}
+C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z
+\end{align*}
+$$.
 
 Here notice that by properties of Gaussian random vectors,
 
@@ -35,7 +43,7 @@ $$
 \begin{align*}
 \xi \overset{d}{=} Q \Lambda^{1/2} W \\
 &= \begin{pmatrix}
-\q_1 \dots q_d
+q_1 \dots q_d
 \end{pmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
 w_1 \\ \vdots \\ w_d
 \end{pmatrix} \\
