@@ -9,16 +9,46 @@ background:
 
 Given a Gaussian Process (GP) specified by its mean and kernel (covariance) function we usually get independent samples at specific points of this process by Cholesky factorizing its Gram matrix and then multiplying this factor by a standard Gaussian vector (see Algorithm 1 in [1]). In this post we derive this fact and also motivate the eigendecomposition of a GP. 
 
-## Let's use properties of Gaussian random vectors
+## Using results of Gaussian random vectors
 
-Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Then notice that
+Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Notice that if we Cholesky factorize $$C = C^{1/2} (C^{1/2})^\top$$ we also have $$\xi \sim N(0,C^{1/2} (C^{1/2})^\top)$$ meaning that 
 
 $$\xi \overset{d}{=} C^{1/2} Z$$.
 
-If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before 
+If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before ids given by 
 
-$$C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z$$ 
+$$C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z$$.
 
+Here notice that by properties of Gaussian random vectors,
+
+$$
+\begin{align*}
+W &:=Q^\top Z \\
+&\sim N(0, Q^\top I Q) \\
+&= N(0, I)
+\end{align*}
+$$
+
+Thus, $$\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$ where $$W \sim N(0,I)$$. And if $$W = (w_1,\dots,w_d)^\top$$ is $$d-$$dimensional then explicitly we have
+
+$$
+\begin{align*}
+\xi \overset{d}{=} Q \Lambda^{1/2} W \\
+&= \begin{pmatrix}
+\q_1 \dots q_d
+\end{pmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
+w_1 \\ \vdots \\ w_d
+\end{pmatrix} \\
+&= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_d q_d \\
+&= \sum_{j=1}^d \sqrt{\lambda_j} w_j q_j
+\end{align*}
+$$
+where we recall that each $$w_j \sim N(0,1)$$.
+
+
+
+
+The first equation (TBD) explains the way of getting independent samples at specific points from a centered GP with kernel $k$. Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $X = \{x_1,\dots, x_N\}$. Then compute 
 
 Let $$K$$ be a reproducing kernel, and denote by $$\mathcal{H}_K$$ its [RKHS](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space). Suppose $$\mathcal{X}$$ be a non-empty set and that we are given:
 
