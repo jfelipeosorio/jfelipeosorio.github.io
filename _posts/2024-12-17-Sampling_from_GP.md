@@ -56,7 +56,7 @@ where we recall that each $$w_j \sim N(0,1)$$.
 
 
 
-The first equation (TBD) explains the way of getting independent samples at specific points from a centered GP with kernel $k$. Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $X = \{x_1,\dots, x_N\}$. Then compute 
+The first equation (TBD) explains the way of getting independent samples at specific points from a centered GP with kernel $k$. Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $X = \left\{x_1,\dots, x_N\right\}$. Then compute 
 
 Let $$K$$ be a reproducing kernel, and denote by $$\mathcal{H}_K$$ its [RKHS](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space). Suppose $$\mathcal{X}$$ be a non-empty set and that we are given:
 
