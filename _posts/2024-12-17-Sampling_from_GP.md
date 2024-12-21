@@ -19,7 +19,7 @@ $$
 \end{align*}
 $$.
 
-If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before ids given by 
+If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before is given by 
 
 $$
 \begin{align*}
@@ -37,7 +37,7 @@ W &:=Q^\top Z \\
 \end{align*}
 $$
 
-Thus, $$\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$ where $$W \sim N(0,I)$$. And if $$W = (w_1,\dots,w_d)^\top$$ is $$d-$$dimensional then explicitly we have
+Thus, $$\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$$ where $$W \sim N(0,I)$$. And if $$W = (w_1,\dots,w_d)^\top$$ is $$d-$$dimensional then explicitly we have
 
 $$
 \begin{align*}
