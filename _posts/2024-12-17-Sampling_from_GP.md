@@ -42,9 +42,9 @@ Thus, $$\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$$ where $$
 $$
 \begin{align*}
 \xi \overset{d}{=} Q \Lambda^{1/2} W \\
-&= \begin{pmatrix}
+&= \begin{bmatrix}
 q_1 \dots q_d
-\end{pmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
+\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
 w_1 \\ \vdots \\ w_d
 \end{pmatrix} \\
 &= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_d q_d \\
