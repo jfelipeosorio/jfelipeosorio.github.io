@@ -15,6 +15,10 @@ Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Then notice that
 
 $$\xi \overset{d}{=} C^{1/2} Z$$.
 
+If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before 
+
+$$C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z$$ 
+
 
 Let $$K$$ be a reproducing kernel, and denote by $$\mathcal{H}_K$$ its [RKHS](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space). Suppose $$\mathcal{X}$$ be a non-empty set and that we are given:
 
