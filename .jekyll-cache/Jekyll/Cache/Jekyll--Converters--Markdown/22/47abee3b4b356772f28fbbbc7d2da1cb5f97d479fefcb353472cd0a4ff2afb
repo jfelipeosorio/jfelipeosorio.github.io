@@ -1,10 +1,52 @@
-I")<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"0<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<p>A powerful set of methods in machine learning arise from the use of kernels. One of the main results from these include the so-called <em>representer theorem</em> which allows us make tracktacle the inference of a desired approximation function. In this post we will discuss the math behind the proofs of the representer theorem and its generalizations.</p>
+<p>Given a Gaussian Process (GP) specified by its mean and kernel (covariance) function we usually get independent samples at specific points of this process by Cholesky factorizing its Gram matrix and then multiplying this factor by a standard Gaussian vector (see Algorithm 1 in [1]). In this post we derive this fact and also motivate the eigendecomposition of a GP.</p>
 
-<h2 id="classical-representer-theorem">Classical representer theorem</h2>
+<h2 id="introduction">Introduction</h2>
+
+<p>A Gaussian process is a collection \(\left\{f_x: x \in X \right\}\) of random variables indexed on an index set \(X\) (time, space, or even a Hilbert Space) such that every finite subset of indices \(\left\{x_1,\dots,x_k\right\} \subset X\)</p>
+
+<h2 id="using-results-of-gaussian-random-vectors">Using results of Gaussian random vectors</h2>
+
+<p>Let \(\xi \sim N(0,C)\) and \(Z \sim N(0,I)\). Notice that if we Cholesky factorize \(C = C^{1/2} (C^{1/2})^\top\) we also have \(\xi \sim N(0,C^{1/2} (C^{1/2})^\top)\) meaning that</p>
+
+\[\begin{align*}
+\xi \overset{d}{=} C^{1/2} Z.
+\end{align*}\]
+
+<p>This fact explains why we can get independent samples at specific points from a centered GP with kernel \(K\).</p>
+
+<p>Let’s recall on the steps. We do first need to specify the discrete domain where to sample the function values, say \(X = \left\{x_1,\dots, x_N\right\}\). Then compute</p>
+
+<p>If \(C = Q \Lambda Q^\top\) then \(C^{1/2} = Q \Lambda^{1/2} Q^\top\). Let’s investigate then on the distribution of \(C^{1/2}Z\), which by the calculation before is given by</p>
+
+\[\begin{align*}
+C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z
+\end{align*}\]
+
+<p>Here notice that by properties of Gaussian random vectors,</p>
+
+\[\begin{align*}
+W &amp;:=Q^\top Z \\
+&amp;\sim N(0, Q^\top I Q) \\
+&amp;= N(0, I)
+\end{align*}\]
+
+<p>Thus, \(\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W\) where \(W \sim N(0,I)\). And if \(W = (w_1,\dots,w_d)^\top\) is \(d-\)dimensional then explicitly we have</p>
+
+<p>\(\begin{align*}
+\xi \overset{d}{=} Q \Lambda^{1/2} W \\
+&amp;= \begin{bmatrix}
+q_1 \dots q_d
+\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
+w_1 \\ \vdots \\ w_d
+\end{pmatrix} \\
+&amp;= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_d q_d \\
+&amp;= \sum_{j=1}^d \sqrt{\lambda_j} w_j q_j
+\end{align*}\)
+where we recall that each \(w_j \sim N(0,1)\).</p>
 
 <p>Let \(K\) be a reproducing kernel, and denote by \(\mathcal{H}_K\) its <a href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space">RKHS</a>. Suppose \(\mathcal{X}\) be a non-empty set and that we are given:</p>
 
@@ -123,7 +165,7 @@ g(\|f\|_{\mathcal{H}_K}) &amp;= g(\|\sum_{i=1}^N \beta_i K(\cdot,x_i) + w(\cdot)
 \|f\|_{\mathcal{H}_K} &amp;= \|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K} \\
 &amp;= (\|\int_\Omega K(\cdot,x)\beta(x)dx + w(\cdot)\|_{\mathcal{H}_K}^2)^{1/2} \\
 &amp;= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2 + 2 \langle \int_\Omega K(\cdot,x)\beta(x)dx, w(\cdot) \rangle )^{1/2} \\
-&amp;= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2  + 2\mathbb{E}_{\mu}(w))^{1/2} \\
+&amp;= (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 + \|w(\cdot)\|_{\mathcal{H}_K}^2  \\
 &amp;\geq (\|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K}^2 )^{1/2}\\
 &amp;= \|\int_\Omega K(\cdot,x)\beta(x)dx\|_{\mathcal{H}_K} 
 \end{align*}\]
@@ -193,12 +235,11 @@ g(\|f\|_{\mathcal{H}_K}) &amp;= g(\|\sum_{i=1}^N \beta_i K(\cdot,x_i) + w(\cdot)
 </ul>
 
 <blockquote>
-  <p>G. S. Kimeldorf and G. Wahba. Some results on Tchebycheffian spline functions.
-J. Math. Anal. Applic., 33:82–95, 1971.</p>
+  <p>[1] Kanagawa, Motonobu, et al. “Gaussian processes and kernel methods: A review on connections and equivalences.” arXiv preprint arXiv:1807.02582 (2018).</p>
 </blockquote>
 
 <blockquote>
-  <p>Schölkopf, Bernhard; Herbrich, Ralf; Smola, Alex J. (2001). “A Generalized Representer Theorem”. In Helmbold, David; Williamson, Bob (eds.). Computational Learning Theory. Lecture Notes in Computer Science. Vol. 2111. Berlin, Heidelberg: Springer. pp. 416–426</p>
+  <p>[2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.</p>
 </blockquote>
 
 :ET

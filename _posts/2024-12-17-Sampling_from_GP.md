@@ -9,15 +9,35 @@ background:
 
 Given a Gaussian Process (GP) specified by its mean and kernel (covariance) function we usually get independent samples at specific points of this process by Cholesky factorizing its Gram matrix and then multiplying this factor by a standard Gaussian vector (see Algorithm 1 in [1]). In this post we derive this fact and also motivate the eigendecomposition of a GP. 
 
+## Introduction
+
+A Gaussian process is a collection $$\left\{f_x: x \in \mathcal{X} \right\}$$ of random variables indexed on an index set $$\mathcal{X}$$ (time, space, or even a Hilbert Space) such that for every finite subset of indices $$X = \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}$$
+
+$$
+\begin{pmatrix}
+f_{x_1} \\
+\vdots \\
+f_{x_N} \\
+\end{pmatrix}
+$$
+
+is a multivariate Gaussian random vector. 
+
+
 ## Using results of Gaussian random vectors
 
 Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Notice that if we Cholesky factorize $$C = C^{1/2} (C^{1/2})^\top$$ we also have $$\xi \sim N(0,C^{1/2} (C^{1/2})^\top)$$ meaning that 
 
 $$
 \begin{align*}
-\xi \overset{d}{=} C^{1/2} Z
+\xi \overset{d}{=} C^{1/2} Z.
 \end{align*}
-$$.
+$$
+
+This fact explains why we can get independent samples at specific points from a centered GP with kernel $$K$$. 
+
+Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $$X = \left\{x_1,\dots, x_N\right\}$$. Then compute
+
 
 If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before is given by 
 
@@ -25,7 +45,7 @@ $$
 \begin{align*}
 C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z
 \end{align*}
-$$.
+$$
 
 Here notice that by properties of Gaussian random vectors,
 
@@ -56,7 +76,6 @@ where we recall that each $$w_j \sim N(0,1)$$.
 
 
 
-The first equation (TBD) explains the way of getting independent samples at specific points from a centered GP with kernel $k$. Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $X = \left\{x_1,\dots, x_N\right\}$. Then compute 
 
 Let $$K$$ be a reproducing kernel, and denote by $$\mathcal{H}_K$$ its [RKHS](https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space). Suppose $$\mathcal{X}$$ be a non-empty set and that we are given:
 
