@@ -11,7 +11,7 @@ Given a Gaussian Process (GP) specified by its mean and kernel (covariance) func
 
 ## Introduction
 
-A Gaussian process is a collection $$\left\{f_x: x \in \mathcal{X} \right\}$$ of random variables indexed on an index set $$\mathcal{X}$$ (time, space, or even a Hilbert Space) such that for every finite subset of indices $$X = \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}$$
+A (centered) Gaussian process is a collection $$\left\{f_x: x \in \mathcal{X} \right\}$$ of random variables indexed on an index set $$\mathcal{X}$$ (time, space, or even a Hilbert Space) such that for every finite subset of indices $$X = \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}$$
 
 $$
 \begin{pmatrix}
@@ -21,24 +21,61 @@ f_{x_N} \\
 \end{pmatrix}
 $$
 
-is a multivariate Gaussian random vector. 
+is a multivariate (centered) Gaussian random vector. An important fact is that a centered Gaussian process can be characterized (see Kolmogorov existence theorem) by its covariance function $$ K : X \times X \to \mathbb{R}$$ defined by 
 
+$$
+K(x,y) = \operatorname{Cov}(f_x,f_y) = \mathbb{E}(f_xf_y)
+$$
 
-## Using results of Gaussian random vectors
+Thus, it is costumary to denote a centered Gaussian process by $$\mathcal{GP}(0,K)$$ and if a random function $$f$$ sampled from it by 
 
-Let $$\xi \sim N(0,C)$$ and $$Z \sim N(0,I)$$. Notice that if we Cholesky factorize $$C = C^{1/2} (C^{1/2})^\top$$ we also have $$\xi \sim N(0,C^{1/2} (C^{1/2})^\top)$$ meaning that 
+$$
+f \sim \mathcal{GP}(0,K).
+$$
+
+Recall that in practice (in the computer) we cannot sample a full function, but a finite amount of values of it. Thus, we must consider sampling a function on a finite subset of the domain, say $$X := \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}$$, thus we would like to sample the centered Gaussian vector
+
+$$
+ f = \begin{pmatrix}
+f_{x_1} \\
+\vdots \\
+f_{x_N} \\
+\end{pmatrix} \sim N(0,C)
+$$
+
+where $$C_{i,j} = K(x_i,x_j)$$ for all $$\left\{i,j\right\}\subset\left\{1,\dots,N\right\}$$. Let's see how to get samples from it.
+
+## Samples from a GP
+
+Let $$f \sim N(0,C)$$ and $$Z \sim N(0,I_N)$$. Notice that if we Cholesky factorize $$C = C^{1/2} (C^{1/2})^\top$$ we also have $$f \sim N(0,C^{1/2} (C^{1/2})^\top)$$ meaning that 
 
 $$
 \begin{align*}
-\xi \overset{d}{=} C^{1/2} Z.
+f \overset{d}{=} C^{1/2} Z.
 \end{align*}
 $$
 
 This fact explains why we can get independent samples at specific points from a centered GP with kernel $$K$$. 
 
-Let's recall on the steps. We do first need to specify the discrete domain where to sample the function values, say $$X = \left\{x_1,\dots, x_N\right\}$$. Then compute
+Let's recall on the steps we need to compute a sample from a GP characterized by an RBF kernel using a python script example:
 
+```python
+    # Define sample size
+    N = 100
+    # Define domain to sample
+    X = np.linespace(0,1,N)
+    # Compute kernel matrix using e.g. RBF kernel
+    C = scipy.kernels.rbf(X)
+    # Get Cholesky factor of C
+    L = np.linalg.cholesky(C)
+    # Get a normal vector
+    Z = np.random.normal(size = (N,))
+    # Compute sample from f ~ GP(0,RBF)
+    f = L @ Z
 
+```
+
+## Eigendecomposition of a GP
 If $$C = Q \Lambda Q^\top$$ then $$ C^{1/2} = Q \Lambda^{1/2} Q^\top$$. Let's investigate then on the distribution of $$C^{1/2}Z$$, which by the calculation before is given by 
 
 $$
@@ -52,25 +89,26 @@ Here notice that by properties of Gaussian random vectors,
 $$
 \begin{align*}
 W &:=Q^\top Z \\
-&\sim N(0, Q^\top I Q) \\
-&= N(0, I)
+&\sim N(0, Q^\top I_N Q) \\
+&= N(0, I_N)
 \end{align*}
 $$
 
-Thus, $$\xi \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$$ where $$W \sim N(0,I)$$. And if $$W = (w_1,\dots,w_d)^\top$$ is $$d-$$dimensional then explicitly we have
+Thus, $$f \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W$$ where $$W \sim N(0,I_N)$$. And if $$W = (w_1,\dots,w_N)^\top$$ is $$N-$$dimensional then explicitly we have
 
 $$
 \begin{align*}
-\xi \overset{d}{=} Q \Lambda^{1/2} W \\
+f &\overset{d}{=} Q \Lambda^{1/2} W \\
 &= \begin{bmatrix}
-q_1 \dots q_d
-\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
-w_1 \\ \vdots \\ w_d
+q_1 \dots q_N
+\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_N})\begin{pmatrix}
+w_1 \\ \vdots \\ w_N
 \end{pmatrix} \\
-&= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_d q_d \\
-&= \sum_{j=1}^d \sqrt{\lambda_j} w_j q_j
+&= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_N q_N \\
+&= \sum_{j=1}^N \sqrt{\lambda_j} w_j q_j
 \end{align*}
 $$
+
 where we recall that each $$w_j \sim N(0,1)$$.
 
 
