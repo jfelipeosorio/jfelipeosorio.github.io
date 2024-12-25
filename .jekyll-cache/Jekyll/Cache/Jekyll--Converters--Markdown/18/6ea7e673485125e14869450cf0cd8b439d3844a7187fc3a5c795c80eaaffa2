@@ -1,4 +1,4 @@
-I"4<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"�E<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -32,9 +32,9 @@ f_{x_N} \\
 
 <p>where \(C_{i,j} = K(x_i,x_j)\) for all \(\left\{i,j\right\}\subset\left\{1,\dots,N\right\}\). Let’s see how to get samples from it.</p>
 
-<h2 id="using-results-of-gaussian-random-vectors">Using results of Gaussian random vectors</h2>
+<h2 id="samples-from-a-gp">Samples from a GP</h2>
 
-<p>Let \(f \sim N(0,C)\) and \(Z \sim N(0,I)\). Notice that if we Cholesky factorize \(C = C^{1/2} (C^{1/2})^\top\) we also have \(f \sim N(0,C^{1/2} (C^{1/2})^\top)\) meaning that</p>
+<p>Let \(f \sim N(0,C)\) and \(Z \sim N(0,I_N)\). Notice that if we Cholesky factorize \(C = C^{1/2} (C^{1/2})^\top\) we also have \(f \sim N(0,C^{1/2} (C^{1/2})^\top)\) meaning that</p>
 
 \[\begin{align*}
 f \overset{d}{=} C^{1/2} Z.
@@ -42,8 +42,35 @@ f \overset{d}{=} C^{1/2} Z.
 
 <p>This fact explains why we can get independent samples at specific points from a centered GP with kernel \(K\).</p>
 
-<p>Let’s recall on the steps. We do first need to specify the discrete domain where to sample the function values, say \(X = \left\{x_1,\dots, x_N\right\}\). Then compute</p>
+<p>Let’s recall on the steps we need to compute several samples from a GP characterized by an RBF kernel using a python script example:</p>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">pairwise_kernels</span> <span class="k">as</span> <span class="n">kernel</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+    <span class="n">seeds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds</span><span class="p">:</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="c1"># Define sample size
+</span>        <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># Define domain to sample
+</span>        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># Compute kernel matrix using e.g. RBF kernel
+</span>        <span class="n">C</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">metric</span><span class="o">=</span><span class="s">'rbf'</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># Get Cholesky factor of C
+</span>        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="c1"># Get a normal vector
+</span>        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,))</span>
+        <span class="c1"># Compute sample from f ~ GP(0,RBF)
+</span>        <span class="n">f</span> <span class="o">=</span> <span class="n">L</span> <span class="o">@</span> <span class="n">Z</span>
+        <span class="c1"># Plot samples
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'sample</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">'upper right'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<h2 id="eigendecomposition-of-a-gp">Eigendecomposition of a GP</h2>
 <p>If \(C = Q \Lambda Q^\top\) then \(C^{1/2} = Q \Lambda^{1/2} Q^\top\). Let’s investigate then on the distribution of \(C^{1/2}Z\), which by the calculation before is given by</p>
 
 \[\begin{align*}
@@ -54,21 +81,21 @@ C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z
 
 \[\begin{align*}
 W &amp;:=Q^\top Z \\
-&amp;\sim N(0, Q^\top I Q) \\
-&amp;= N(0, I)
+&amp;\sim N(0, Q^\top I_N Q) \\
+&amp;= N(0, I_N)
 \end{align*}\]
 
-<p>Thus, \(f \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W\) where \(W \sim N(0,I)\). And if \(W = (w_1,\dots,w_d)^\top\) is \(d-\)dimensional then explicitly we have</p>
+<p>Thus, \(f \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W\) where \(W \sim N(0,I_N)\). And if \(W = (w_1,\dots,w_N)^\top\) is \(N-\)dimensional then explicitly we have</p>
 
 \[\begin{align*}
 f &amp;\overset{d}{=} Q \Lambda^{1/2} W \\
 &amp;= \begin{bmatrix}
-q_1 \dots q_d
-\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_d})\begin{pmatrix}
-w_1 \\ \vdots \\ w_d
+q_1 \dots q_N
+\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_N})\begin{pmatrix}
+w_1 \\ \vdots \\ w_N
 \end{pmatrix} \\
-&amp;= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_d q_d \\
-&amp;= \sum_{j=1}^d \sqrt{\lambda_j} w_j q_j
+&amp;= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_N q_N \\
+&amp;= \sum_{j=1}^N \sqrt{\lambda_j} w_j q_j
 \end{align*}\]
 
 <p>where we recall that each \(w_j \sim N(0,1)\).</p>

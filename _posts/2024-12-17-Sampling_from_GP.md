@@ -57,21 +57,32 @@ $$
 
 This fact explains why we can get independent samples at specific points from a centered GP with kernel $$K$$. 
 
-Let's recall on the steps we need to compute a sample from a GP characterized by an RBF kernel using a python script example:
+Let's recall on the steps we need to compute several samples from a GP characterized by an RBF kernel using a python script example:
 
 ```python
-    # Define sample size
-    N = 100
-    # Define domain to sample
-    X = np.linespace(0,1,N)
-    # Compute kernel matrix using e.g. RBF kernel
-    C = scipy.kernels.rbf(X)
-    # Get Cholesky factor of C
-    L = np.linalg.cholesky(C)
-    # Get a normal vector
-    Z = np.random.normal(size = (N,))
-    # Compute sample from f ~ GP(0,RBF)
-    f = L @ Z
+    import numpy as np
+    from sklearn.metrics.pairwise import pairwise_kernels as kernel
+    import matplotlib.pyplot as plt
+
+    seeds = [0,1,2,3,4]
+    for seed in seeds:
+        np.random.seed(seed)
+        # Define sample size
+        N = 50
+        # Define domain to sample
+        X = np.linspace(0,1,N)
+        # Compute kernel matrix using e.g. RBF kernel
+        C = kernel(X.reshape(-1,1), metric='rbf') + 1e-6*np.eye(N)
+        # Get Cholesky factor of C
+        L = np.linalg.cholesky(C)
+        # Get a normal vector
+        Z = np.random.normal(size = (N,))
+        # Compute sample from f ~ GP(0,RBF)
+        f = L @ Z
+        # Plot samples
+        plt.scatter(X,f, s = 0.5, label = f'sample{seed}')
+        plt.legend(loc = 'upper right')
+    plt.show()
 
 ```
 
