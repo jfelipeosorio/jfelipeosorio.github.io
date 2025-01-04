@@ -1,0 +1,147 @@
+I"�3<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>Given a Gaussian Process (GP) specified by its mean and kernel (covariance) function we usually get independent samples at specific points of this process by Cholesky factorizing its Gram matrix and then multiplying this factor by a standard Gaussian vector (see Algorithm 1 in [1]). In this post we derive this fact and also motivate the eigendecomposition of a GP.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>A (centered) Gaussian process is a collection \(\left\{f_x: x \in \mathcal{X} \right\}\) of random variables indexed on an index set \(\mathcal{X}\) (time, space, or even a Hilbert Space) such that for every finite subset of indices \(X = \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}\)</p>
+
+\[\begin{pmatrix}
+f_{x_1} \\
+\vdots \\
+f_{x_N} \\
+\end{pmatrix}\]
+
+<p>is a multivariate (centered) Gaussian random vector. An important fact is that a centered Gaussian process can be characterized (see Kolmogorov existence theorem) by its covariance function \(K : X \times X \to \mathbb{R}\) defined by</p>
+
+\[K(x,y) = \operatorname{Cov}(f_x,f_y) = \mathbb{E}(f_xf_y)\]
+
+<p>Thus, it is costumary to denote a centered Gaussian process by \(\mathcal{GP}(0,K)\) and if a random function \(f\) sampled from it by</p>
+
+\[f \sim \mathcal{GP}(0,K).\]
+
+<p>Recall that in practice (in the computer) we cannot sample a full function, but a finite amount of values of it. Thus, we must consider sampling a function on a finite subset of the domain, say \(X := \left\{x_1,\dots,x_N\right\} \subset \mathcal{X}\), thus we would like to sample the centered Gaussian vector</p>
+
+\[f = \begin{pmatrix}
+f_{x_1} \\
+\vdots \\
+f_{x_N} \\
+\end{pmatrix} \sim N(0,C)\]
+
+<p>where \(C_{i,j} = K(x_i,x_j)\) for all \(\left\{i,j\right\}\subset\left\{1,\dots,N\right\}\). Let’s see how to get samples from it.</p>
+
+<h2 id="samples-from-a-gp">Samples from a GP</h2>
+
+<p>Let \(f \sim N(0,C)\) and \(Z \sim N(0,I_N)\). Notice that if we Cholesky factorize \(C = C^{1/2} (C^{1/2})^\top\) we also have \(f \sim N(0,C^{1/2} (C^{1/2})^\top)\) meaning that</p>
+
+\[\begin{align*}
+f \overset{d}{=} C^{1/2} Z.
+\end{align*}\]
+
+<p>This fact explains why we can get independent samples at specific points from a centered GP with kernel \(K\).</p>
+
+<p>Let’s recall on the steps we need to compute several samples from a GP characterized by an RBF kernel using a python script example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+    <span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">pairwise_kernels</span> <span class="k">as</span> <span class="n">kernel</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+    <span class="n">seeds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds</span><span class="p">:</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="c1"># Define sample size
+</span>        <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># Define domain to sample
+</span>        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># Compute kernel matrix using e.g. RBF kernel
+</span>        <span class="n">C</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">metric</span><span class="o">=</span><span class="s">'rbf'</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># Get Cholesky factor of C
+</span>        <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+        <span class="c1"># Get a normal vector
+</span>        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,))</span>
+        <span class="c1"># Compute sample from f ~ GP(0,RBF)
+</span>        <span class="n">f</span> <span class="o">=</span> <span class="n">L</span> <span class="o">@</span> <span class="n">Z</span>
+        <span class="c1"># Plot samples
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'sample</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">'upper right'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/img/posts/Sampling_GP/samplesGP.png" width="100%" height="100%" /></p>
+
+<h2 id="eigendecomposition-of-a-gp">Eigendecomposition of a GP</h2>
+<p>If \(C = Q \Lambda Q^\top\) then \(C^{1/2} = Q \Lambda^{1/2} Q^\top\). Let’s investigate then on the distribution of \(C^{1/2}Z\), which by the calculation before is given by</p>
+
+\[\begin{align*}
+C^{1/2}Z = Q \Lambda^{1/2} Q^\top Z
+\end{align*}\]
+
+<p>Here notice that by properties of Gaussian random vectors,</p>
+
+\[\begin{align*}
+W &amp;:=Q^\top Z \\
+&amp;\sim N(0, Q^\top I_N Q) \\
+&amp;= N(0, I_N)
+\end{align*}\]
+
+<p>Thus, \(f \overset{d}{=} C^{1/2} Z \overset{d}{=} Q \Lambda^{1/2} W\) where \(W \sim N(0,I_N)\). And if \(W = (w_1,\dots,w_N)^\top\) is \(N-\)dimensional then explicitly we have</p>
+
+\[\begin{align*}
+f &amp;\overset{d}{=} Q \Lambda^{1/2} W \\
+&amp;= \begin{bmatrix}
+q_1 \dots q_N
+\end{bmatrix} \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_N})\begin{pmatrix}
+w_1 \\ \vdots \\ w_N
+\end{pmatrix} \\
+&amp;= \sqrt{\lambda_1} w_1 q_1 + \dots +  \sqrt{\lambda_d} w_N q_N \\
+&amp;= \sum_{j=1}^N \sqrt{\lambda_j} w_j q_j
+\end{align*}\]
+
+<p>where we recall that each \(w_j \sim N(0,1)\).</p>
+
+<p>For instance, if we take \(\lambda_j = \frac{1}{j^{2\alpha}}\), \(q_j = \begin{pmatrix}\sin(j \pi x_i)\end{pmatrix}^\top\) and $w_j \sim N(0,1)$ one can sample a pinned GP with regularity \(\alpha\) using a python script example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">seeds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds</span><span class="p">:</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="c1"># Define sample size
+</span>        <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># Define domain to sample
+</span>        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># sine matrix
+</span>        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">*</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]).</span><span class="n">T</span>
+        <span class="c1"># e-vals
+</span>        <span class="n">L_SQRT</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">([</span><span class="n">j</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="c1"># W
+</span>        <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,))</span> 
+        <span class="c1"># Compute sample
+</span>        <span class="n">f</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">L_SQRT</span> <span class="o">@</span> <span class="n">W</span>
+        <span class="c1"># Plot sample
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'sample</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">'upper right'</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<h2 id="references">References:</h2>
+
+<ul>
+  <li>For the connections between Gaussian Process Regression, kernel ridge regression and RKHS methods we followed this:</li>
+</ul>
+
+<blockquote>
+  <p>[1] Kanagawa, Motonobu, et al. “Gaussian processes and kernel methods: A review on connections and equivalences.” arXiv preprint arXiv:1807.02582 (2018).</p>
+</blockquote>
+
+<ul>
+  <li>For a classical treatment of the use of GPs in machine learning we are inspired by:</li>
+</ul>
+
+<blockquote>
+  <p>[2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.</p>
+</blockquote>
+
+:ET

@@ -1,4 +1,4 @@
-I"æ!<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"‰3<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -102,17 +102,43 @@ w_1 \\ \vdots \\ w_N
 
 <p>where we recall that each \(w_j \sim N(0,1)\).</p>
 
-<p>For instance, one can sample a pinned GP using the following</p>
+<p>For instance, if we take \(\lambda_j = \frac{1}{j^{2\alpha}}\), \(q_j = \begin{pmatrix}\sin(j \pi x_1) \dots \sin(j \pi x_N)\end{pmatrix}^\top\) and $w_j \sim N(0,1)$ one can sample a pinned GP with regularity \(\alpha\) using a python script example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">alpha</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">seeds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="n">seeds</span><span class="p">:</span>
+        <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="c1"># Define sample size
+</span>        <span class="n">N</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="c1"># Define domain to sample
+</span>        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
+        <span class="c1"># sine matrix
+</span>        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="o">*</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]).</span><span class="n">T</span>
+        <span class="c1"># e-vals
+</span>        <span class="n">L_SQRT</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">([</span><span class="n">j</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="c1"># W
+</span>        <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span><span class="p">,))</span> 
+        <span class="c1"># Compute sample
+</span>        <span class="n">f</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">@</span> <span class="n">L_SQRT</span> <span class="o">@</span> <span class="n">W</span>
+        <span class="c1"># Plot sample
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">f</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'sample</span><span class="si">{</span><span class="n">seed</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s">'upper right'</span><span class="p">)</span>
+
+</code></pre></div></div>
 
 <h2 id="references">References:</h2>
 
 <ul>
-  <li>For the classical result we refer to</li>
+  <li>For the connections between Gaussian Process Regression, kernel ridge regression and RKHS methods we followed this:</li>
 </ul>
 
 <blockquote>
   <p>[1] Kanagawa, Motonobu, et al. ‚ÄúGaussian processes and kernel methods: A review on connections and equivalences.‚Äù arXiv preprint arXiv:1807.02582 (2018).</p>
 </blockquote>
+
+<ul>
+  <li>For a classical treatment of the use of GPs in machine learning we are inspired by:</li>
+</ul>
 
 <blockquote>
   <p>[2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.</p>

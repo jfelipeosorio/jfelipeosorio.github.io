@@ -124,13 +124,39 @@ $$
 
 where we recall that each $$w_j \sim N(0,1)$$.
 
-For instance, one can sample a pinned GP using the following 
+For instance, if we take $$\lambda_j = \frac{1}{j^{2\alpha}}$$, $$q_j = \begin{pmatrix}\sin(j \pi x_1) \dots \sin(j \pi x_N)\end{pmatrix}^\top$$ and $$w_j \sim N(0,1)$$ one can sample a pinned GP with regularity $$\alpha$$ using a python script example:
+
+```python
+    alpha = 2
+    seeds = [0,1,2,3,4]
+    for seed in seeds:
+        np.random.seed(seed)
+        # Define sample size
+        N = 50
+        # Define domain to sample
+        X = np.linspace(0,1,N)
+        # sine matrix
+        Q = np.array([np.sin(j*np.pi*X) for j in range(1,N+1)]).T
+        # e-vals
+        L_SQRT = np.diag([j**(-alpha) for j in range(1,N+1)])
+        # W
+        W = np.random.normal(size = (N,)) 
+        # Compute sample
+        f = Q @ L_SQRT @ W
+        # Plot sample
+        plt.scatter(X,f, s = 0.5, label = f'sample{seed}')
+        plt.legend(loc = 'upper right')
+
+```
+<img src="/img/posts/Sampling_GP/samples_sineGP.png" width="100%" height="100%"/>
 
 ## References:
 
-- For the classical result we refer to 
+- For the connections between Gaussian Process Regression, kernel ridge regression and RKHS methods we followed this:
 
 > [1] Kanagawa, Motonobu, et al. "Gaussian processes and kernel methods: A review on connections and equivalences." arXiv preprint arXiv:1807.02582 (2018).
+
+- For a classical treatment of the use of GPs in machine learning we are inspired by:
 
 > [2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.
 

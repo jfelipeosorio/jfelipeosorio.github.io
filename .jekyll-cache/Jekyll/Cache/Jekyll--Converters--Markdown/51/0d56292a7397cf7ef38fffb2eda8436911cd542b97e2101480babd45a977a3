@@ -1,4 +1,4 @@
-I"y!<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"�"<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -102,15 +102,24 @@ w_1 \\ \vdots \\ w_N
 
 <p>where we recall that each \(w_j \sim N(0,1)\).</p>
 
+<p>For instance, one can sample a pinned GP using the following process:</p>
+
+<p>\(\begin{align*}
+u_0(x) = \sum_{j=1}^N \frac{1}{j^\alpha} \sin(j \pi x) Z_j
+\end{align*}\)</p>
 <h2 id="references">References:</h2>
 
 <ul>
-  <li>For the classical result we refer to</li>
+  <li>For the connections between Gaussian Process Regression, kernel ridge regression and RKHS methods we followed this:</li>
 </ul>
 
 <blockquote>
   <p>[1] Kanagawa, Motonobu, et al. “Gaussian processes and kernel methods: A review on connections and equivalences.” arXiv preprint arXiv:1807.02582 (2018).</p>
 </blockquote>
+
+<ul>
+  <li>For a classical treatment of the use of GPs in machine learning we are inspired by:</li>
+</ul>
 
 <blockquote>
   <p>[2] Williams, Christopher KI, and Carl Edward Rasmussen. Gaussian processes for machine learning. Vol. 2. No. 3. Cambridge, MA: MIT press, 2006.</p>
