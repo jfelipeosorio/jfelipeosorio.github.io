@@ -20,8 +20,8 @@ Hey this is Juan Felipe Osorio Ramirez. I enjoy studying mathematics of data sci
 My current research includes:
 
 - Learning differential equations using Gaussian Processes.
+* Jalalian, Y., Ramirez, J. F. O., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. See it [here](https://arxiv.org/abs/2503.01036) and code [here](https://github.com/TADSGroup/kernelequationlearning).
 - Solving Keller-Segle type equations using kernel methods.
-- Measure transport with some imaging applications.
 
 During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
 
