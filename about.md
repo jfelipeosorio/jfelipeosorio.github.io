@@ -41,11 +41,11 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 **Publications**
 
-* Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. See it [here](https://arxiv.org/abs/2503.01036) and code [here](https://github.com/TADSGroup/kernelequationlearning).
-
-* Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
+* Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. [see here](https://arxiv.org/abs/2503.01036) and [code here](https://github.com/TADSGroup/kernelequationlearning).
 
 * Gallego, J.A., Osorio, J. F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see here](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
+
+* Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
 
 **Teaching assistant**
 
