@@ -19,8 +19,8 @@ Hey this is Juan Felipe Osorio Ramirez. I enjoy studying mathematics of data sci
 \
 My current research includes:
 
-- Learning differential equations using Gaussian Processes.
-* Jalalian, Y., Ramirez, J. F. O., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. See it [here](https://arxiv.org/abs/2503.01036) and code [here](https://github.com/TADSGroup/kernelequationlearning).
+- Learning/discovery of PDEs using GP/kernel methods.
+
 - Solving Keller-Segle type equations using kernel methods.
 
 During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
@@ -41,9 +41,11 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 **Publications**
 
-* Agredo, Julián & Leon, Y. & Osorio, J. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
+* Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. See it [here](https://arxiv.org/abs/2503.01036) and code [here](https://github.com/TADSGroup/kernelequationlearning).
 
-* Gallego, J.A., Osorio, J.F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see here](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
+* Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
+
+* Gallego, J.A., Osorio, J. F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see here](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
 
 **Teaching assistant**
 
@@ -61,19 +63,28 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 **Conferences/Posters/Workshops**
 
+* 25-WI-(C|P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
+
 * 24-SU-(P): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bath, UK.
 
-* 24-WI-(C): Kernel methods for learning PDEs at SIAM UQ 24. Italy.
+* 24-WI-(C): Kernel methods for learning PDEs. SIAM UQ 24. Italy.
 
 * 23-SU-(W): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [here](https://github.com/jfelipeosorio/sciML).
 
 **Conferences/Workshops attended**
+
+* LatMath 2015. University of California in Los Angeles. Los Angeles, US. 
 
 * Machine Learning in Infinite Dimensions. University of Bath. Bath, UK.
 
 * 2024 SIAM Conference on Uncertainty Quantification. Trieste, Italy.
 
 * 2023 SIAM Conference on Optimization. Seattle, USA.
+
+
+**Awards**
+
+* LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
 
 
 
