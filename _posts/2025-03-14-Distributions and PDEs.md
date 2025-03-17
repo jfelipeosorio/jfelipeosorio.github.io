@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Distributions, weak derivatives and PDEs"
-subtitle: "A conceptual introduction"
+subtitle: "A conceptual brief introduction"
 background: 
 ---
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
