@@ -5,21 +5,18 @@ description:
 background: '/img/bg-about.jpg'
 ---
 
-<!-- <img style="float: left;" src="/img/about/meabout.jpeg" width="50%" height="15%" class='center'/> -->
-<img src="/img/about/meabout.jpeg" style="float: left;" width="40%" height="15%"/>
-\
-\
-\
-\
-\
-Hey this is Juan Felipe Osorio Ramirez. I enjoy studying mathematics of data science and its applications in solving or learning PDEs. I'm a third year PhD student at the Department of Applied Mathematics at the University of Washington and I am fortunate to work under the supervision of Prof. [Bamdad Hosseini](https://bamdadhosseini.org/).
-\
-\
-\
-\
+<div style="display: flex; align-items: flex-start;">
+  <div style="flex: 1;">
+    <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%">
+  </div>
+  <div style="flex: 1; padding-left: 10px;">
+    Hi! I am Juan Felipe Osorio Ramirez, a third-year PhD student in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> usign kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
+  </div>
+</div>
+
 My current research includes:
 
-- Learning/discovery of PDEs using GP/kernel methods.
+- Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences and sismic data.
 
 - Solving Keller-Segle type equations using kernel methods.
 
