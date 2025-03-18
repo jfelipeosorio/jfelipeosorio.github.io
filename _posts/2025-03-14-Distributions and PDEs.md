@@ -284,7 +284,7 @@ Before we actually test $$u$$ is a solution, we need to check two key properties
 - For any linear PDE operator $$\mathcal L$$ we have that 
 
 $$
-\mathcal{L}(f * T) = \mathcal{L} f * T = f *(\mathcal{L} * T).
+\mathcal{L}(f * T) = \mathcal{L} f * T = f *(\mathcal{L} T).
 $$
 
 - $$(f * \delta) = T_f$$.
@@ -296,7 +296,7 @@ Thus,
 $$
 
 \begin{align*}
-\Delta u &= f * T_v\\
+\Delta u &= \Delta(f * T_v)\\
 &= f * \Delta T_v\\
 &= f * \delta\\
 &= T_f.
