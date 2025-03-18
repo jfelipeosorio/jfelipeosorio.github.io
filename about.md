@@ -10,7 +10,7 @@ background: '/img/bg-about.jpg'
     <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%">
   </div>
   <div style="flex: 1; padding-left: 10px;">
-    Hi! I am Juan Felipe Osorio Ramirez, a third-year PhD student in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> usign kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
+    Hi! I am Juan Felipe Osorio Ramirez, a third-year PhD student in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
