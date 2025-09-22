@@ -10,21 +10,31 @@ background: '/img/bg-about.jpg'
     <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%">
   </div>
   <div style="flex: 1; padding-left: 10px;">
-    Hi! I am Juan Felipe Osorio Ramirez, a third-year PhD student in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
+    Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
-My current research includes:
+**News**
 
-- Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences and sismic data.
+- **Open for summer tech/quant internships for Summer 2026**. Feel free to contact me via email at: josorior@uw.edu
 
-- Solving Keller-Segle type equations using kernel methods.
+- I will be giving a talk at SIAM-PNW 2025 (Seattle,US) on using kernel methods for learning and emulating PDEs.
 
-During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
+- I will be giving a talk at SIAM-PDE 2025 (Pittsburgh,US) on characterizing Jupiter's radiation belt through PDEs using SciML kernel methods.
+
+**Current research projects**
+
+- Learning stochastic PDEs in finance using kernel methods.
+
+- Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences (Jupiter's radiation belt) and sismic data.
+
+- Scalability of kernel methods for learning systems of PDEs using distributed methods in optimization.
+
+- Solving time-dependent PDEs using kernel methods including Fokker-Planck and Keller-Segle models.
 
 **Education**
 
-* Ph.D. in Applied Mathematics, 2022-2026 (expected) @
+* Ph.D. in Applied Mathematics, 2022-2027 (expected) @
 [Department of Applied Mathematics, University of Washington](https://amath.washington.edu/).
 
 * M.Sc. in Applied and Computational Mathematics, 2021-2022 @
@@ -46,6 +56,10 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 **Teaching assistant**
 
+* 25-AU: AMATH581-Intro to Scientific Computing
+
+* 24-25: Co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
+
 * 24-SP: AMATH563-Inferring Structure of Complex Systems
 
 * 24-WI: AMATH582-Computational Methods for Data Analysis
@@ -60,7 +74,11 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 **Conferences/Posters/Workshops**
 
-* 25-WI-(C|P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
+* 25-AU-(C): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.
+
+* 25-AU-(C): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators. SIAM-PNW 2025. University of Washington.
+
+* 25-WI-(C|P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM at University of California, LA.
 
 * 24-SU-(P): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bath, UK.
 
@@ -86,6 +104,8 @@ During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the D
 
 
 **Events organized**
+
+* Minisymposium on *Scientific Machine Learning* at SIAM PNW 2025 in Seattle, United States.
 
 * Minisymposium on *GPs and Kernel Methods for Scientific Machine Learning* at SIAM UQ 2024 in Trieste, Italy.
 
