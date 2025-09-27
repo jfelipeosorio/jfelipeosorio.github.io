@@ -16,7 +16,7 @@ background: '/img/bg-about.jpg'
 
 **News**
 
-- **Open for summer tech/quant internships for Summer 2026**. Feel free to contact me via email at: josorior@uw.edu
+- **Open to Summer 2026 Internship Opportunities** in ML/AI, Data Science, or Quantitative research.
 
 - I will be giving a talk at SIAM-PNW 2025 (Seattle,US) on using kernel methods for learning and emulating PDEs.
 
