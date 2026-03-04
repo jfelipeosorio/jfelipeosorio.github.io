@@ -1,4 +1,4 @@
-I"V<<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+I"\<<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -212,7 +212,7 @@
   <li>For any linear PDE operator \(\mathcal L\) we have that</li>
 </ul>
 
-\[\mathcal{L}(f * T) = \mathcal{L} f * T = f *(\mathcal{L} * T).\]
+\[\mathcal{L}(f * T) = \mathcal{L} f * T = f *(\mathcal{L} T).\]
 
 <ul>
   <li>\((f * \delta) = T_f\).</li>
@@ -223,7 +223,7 @@
 <p>Thus,</p>
 
 \[\begin{align*}
-\Delta u &amp;= f * T_v\\
+\Delta u &amp;= \Delta(f * T_v)\\
 &amp;= f * \Delta T_v\\
 &amp;= f * \delta\\
 &amp;= T_f.

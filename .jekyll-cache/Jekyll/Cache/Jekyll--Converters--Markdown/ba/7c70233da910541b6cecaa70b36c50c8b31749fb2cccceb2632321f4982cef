@@ -1,30 +1,48 @@
-I"a<div style="display: flex; align-items: flex-start;">
+I"<div style="display: flex; align-items: flex-start;">
   <div style="flex: 1;">
     <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%" />
   </div>
   <div style="flex: 1; padding-left: 10px;">
-    Hey this is Juan Felipe Osorio Ramirez. I enjoy studying mathematics of data science and its applications in solving or learning PDEs. I'm a third year PhD student at the Department of Applied Mathematics at the University of Washington and I am fortunate to work under the supervision of Prof. [Bamdad Hosseini](https://bamdadhosseini.org/). <a href="https://bamdadhosseini.org/" target="_blank">this link</a>
+    Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
-<p>My current research includes:</p>
+<p><strong>News</strong></p>
 
 <ul>
   <li>
-    <p>Learning/discovery of PDEs using GP/kernel methods.</p>
+    <p><strong>Open to Summer 2026 Internship Opportunities</strong> in ML/AI, Data Science, or Quantitative research.</p>
   </li>
   <li>
-    <p>Solving Keller-Segle type equations using kernel methods.</p>
+    <p>I will be giving a talk at SIAM-PNW 2025 (Seattle,US) on using kernel methods for learning and emulating PDEs.</p>
+  </li>
+  <li>
+    <p>I will be giving a talk at SIAM-PDE 2025 (Pittsburgh,US) on characterizing Jupiter’s radiation belt through PDEs using SciML kernel methods.</p>
   </li>
 </ul>
 
-<p>During 2024-25 academic year, I will be the co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.</p>
+<p><strong>Current research projects</strong></p>
+
+<ul>
+  <li>
+    <p>Learning stochastic PDEs in finance using kernel methods.</p>
+  </li>
+  <li>
+    <p>Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences (Jupiter’s radiation belt) and sismic data.</p>
+  </li>
+  <li>
+    <p>Scalability of kernel methods for learning systems of PDEs using distributed methods in optimization.</p>
+  </li>
+  <li>
+    <p>Solving time-dependent PDEs using kernel methods including Fokker-Planck and Keller-Segle models.</p>
+  </li>
+</ul>
 
 <p><strong>Education</strong></p>
 
 <ul>
   <li>
-    <p>Ph.D. in Applied Mathematics, 2022-2026 (expected) @
+    <p>Ph.D. in Applied Mathematics, 2022-2027 (expected) @
 <a href="https://amath.washington.edu/">Department of Applied Mathematics, University of Washington</a>.</p>
   </li>
   <li>
@@ -57,6 +75,12 @@
 
 <ul>
   <li>
+    <p>25-AU: AMATH581-Intro to Scientific Computing</p>
+  </li>
+  <li>
+    <p>24-25: Co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.</p>
+  </li>
+  <li>
     <p>24-SP: AMATH563-Inferring Structure of Complex Systems</p>
   </li>
   <li>
@@ -80,11 +104,17 @@
 
 <ul>
   <li>
+    <p>25-AU-(C): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.</p>
+  </li>
+  <li>
+    <p>25-AU-(C): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators. SIAM-PNW 2025. University of Washington.</p>
+  </li>
+  <li>
     <table>
       <tbody>
         <tr>
           <td>25-WI-(C</td>
-          <td>P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.</td>
+          <td>P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM at University of California, LA.</td>
         </tr>
       </tbody>
     </table>
@@ -124,7 +154,12 @@
 <p><strong>Events organized</strong></p>
 
 <ul>
-  <li>Minisymposium on <em>GPs and Kernel Methods for Scientific Machine Learning</em> at SIAM UQ 2024 in Trieste, Italy.</li>
+  <li>
+    <p>Minisymposium on <em>Scientific Machine Learning</em> at SIAM PNW 2025 in Seattle, United States.</p>
+  </li>
+  <li>
+    <p>Minisymposium on <em>GPs and Kernel Methods for Scientific Machine Learning</em> at SIAM UQ 2024 in Trieste, Italy.</p>
+  </li>
 </ul>
 
 :ET
