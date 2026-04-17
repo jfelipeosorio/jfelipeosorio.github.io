@@ -7,14 +7,14 @@ background: '/img/bg-about.jpg'
 
 <div style="display: flex; align-items: flex-start;">
   <div style="flex: 1;">
-    <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%">
+    <img src="/img/about/meabout.jpeg" alt="Juan Felipe Osorio Ramirez, PhD candidate in Applied Mathematics at the University of Washington" width="100%">
   </div>
   <div style="flex: 1; padding-left: 10px;">
     Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
-**News**
+## News
 
 - **Open to Summer 2026 Internship Opportunities** in ML/AI, Data Science, or Quantitative research.
 
@@ -22,7 +22,7 @@ background: '/img/bg-about.jpg'
 
 - I will be giving a talk at SIAM-PDE 2025 (Pittsburgh,US) on characterizing Jupiter's radiation belt through PDEs using SciML kernel methods.
 
-**Current research projects**
+## Current research projects
 
 - Learning stochastic PDEs in finance using kernel methods.
 
@@ -32,7 +32,7 @@ background: '/img/bg-about.jpg'
 
 - Solving time-dependent PDEs using kernel methods including Fokker-Planck and Keller-Segle models.
 
-**Education**
+## Education
 
 * Ph.D. in Applied Mathematics, 2022-2027 (expected) @
 [Department of Applied Mathematics, University of Washington](https://amath.washington.edu/).
@@ -46,15 +46,15 @@ background: '/img/bg-about.jpg'
 
 
 
-**Publications**
+## Publications
 
-* Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. [see here](https://arxiv.org/abs/2503.01036) and [code here](https://github.com/TADSGroup/kernelequationlearning).
+* Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., & Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. [arXiv preprint](https://arxiv.org/abs/2503.01036) and [GitHub repository](https://github.com/TADSGroup/kernelequationlearning).
 
-* Gallego, J.A., Osorio, J. F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [see here](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
+* Gallego, J.A., Osorio, J. F., & González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. [Springer chapter](https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14)
 
-* Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [see here](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
+* Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [Journal of Mathematical Inequalities](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
 
-**Teaching assistant**
+## Teaching assistant
 
 * 25-AU: AMATH581-Intro to Scientific Computing
 
@@ -72,7 +72,7 @@ background: '/img/bg-about.jpg'
 
 * 22-AU: MATH124-Calculus with Analytic Geometry I
 
-**Conferences/Posters/Workshops**
+## Conferences/Posters/Workshops
 
 * 25-AU-(C): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.
 
@@ -84,9 +84,9 @@ background: '/img/bg-about.jpg'
 
 * 24-WI-(C): Kernel methods for learning PDEs. SIAM UQ 24. Italy.
 
-* 23-SU-(W): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [here](https://github.com/jfelipeosorio/sciML).
+* 23-SU-(W): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [on GitHub](https://github.com/jfelipeosorio/sciML).
 
-**Conferences/Workshops attended**
+## Conferences/Workshops attended
 
 * LatMath 2015. University of California in Los Angeles. Los Angeles, US. 
 
@@ -97,13 +97,13 @@ background: '/img/bg-about.jpg'
 * 2023 SIAM Conference on Optimization. Seattle, USA.
 
 
-**Awards**
+## Awards
 
 * LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
 
 
 
-**Events organized**
+## Events organized
 
 * Minisymposium on *Scientific Machine Learning* at SIAM PNW 2025 in Seattle, United States.
 

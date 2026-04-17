@@ -1,3 +1,22 @@
+// Skip to main content link - visually hidden until focused
+.skip-to-main {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    background: $primary;
+    color: $white;
+    padding: 10px 20px;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    z-index: 9999;
+
+    &:focus {
+        top: 0;
+        color: $white;
+    }
+}
+
 // Global styling for this template
 body {
     font-size: 20px;
