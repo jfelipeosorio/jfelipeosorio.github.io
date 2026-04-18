@@ -1,13 +1,13 @@
-I"<div style="display: flex; align-items: flex-start;">
+I"�<div style="display: flex; align-items: flex-start;">
   <div style="flex: 1;">
-    <img src="/img/about/meabout.jpeg" alt="Description of image" width="100%" />
+    <img src="/img/about/meabout.jpeg" alt="Juan Felipe Osorio Ramirez, PhD candidate in Applied Mathematics at the University of Washington" width="100%" />
   </div>
   <div style="flex: 1; padding-left: 10px;">
     Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
-<p><strong>News</strong></p>
+<h2 id="news">News</h2>
 
 <ul>
   <li>
@@ -21,7 +21,7 @@
   </li>
 </ul>
 
-<p><strong>Current research projects</strong></p>
+<h2 id="current-research-projects">Current research projects</h2>
 
 <ul>
   <li>
@@ -38,7 +38,7 @@
   </li>
 </ul>
 
-<p><strong>Education</strong></p>
+<h2 id="education">Education</h2>
 
 <ul>
   <li>
@@ -57,21 +57,21 @@
   </li>
 </ul>
 
-<p><strong>Publications</strong></p>
+<h2 id="publications">Publications</h2>
 
 <ul>
   <li>
-    <p>Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., &amp; Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. <a href="https://arxiv.org/abs/2503.01036">see here</a> and <a href="https://github.com/TADSGroup/kernelequationlearning">code here</a>.</p>
+    <p>Jalalian, Y., Osorio, J. F., Hsu, A., Hosseini, B., &amp; Owhadi, H. (2025). Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. arXiv preprint arXiv:2503.01036. <a href="https://arxiv.org/abs/2503.01036">arXiv preprint</a> and <a href="https://github.com/TADSGroup/kernelequationlearning">GitHub repository</a>.</p>
   </li>
   <li>
-    <p>Gallego, J.A., Osorio, J. F., &amp; González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. <a href="https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14">see here</a></p>
+    <p>Gallego, J.A., Osorio, J. F., &amp; González, F.A. (2022). Fast Kernel Density Estimation with Density Matrices and Random Fourier Features. <a href="https://link.springer.com/chapter/10.1007/978-3-031-22419-5_14">Springer chapter</a></p>
   </li>
   <li>
-    <p>Agredo, Julián &amp; Leon, Y. &amp; Osorio, J. F. &amp; Peña, A.. (2019). Buzano’s inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. <a href="http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces">see here</a></p>
+    <p>Agredo, Julián &amp; Leon, Y. &amp; Osorio, J. F. &amp; Peña, A.. (2019). Buzano’s inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. <a href="http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces">Journal of Mathematical Inequalities</a></p>
   </li>
 </ul>
 
-<p><strong>Teaching assistant</strong></p>
+<h2 id="teaching-assistant">Teaching assistant</h2>
 
 <ul>
   <li>
@@ -100,7 +100,7 @@
   </li>
 </ul>
 
-<p><strong>Conferences/Posters/Workshops</strong></p>
+<h2 id="conferencespostersworkshops">Conferences/Posters/Workshops</h2>
 
 <ul>
   <li>
@@ -125,10 +125,10 @@
   <li>
     <p>24-WI-(C): Kernel methods for learning PDEs. SIAM UQ 24. Italy.</p>
   </li>
-  <li>23-SU-(W): Introduction to Scientific Machine Learning (3 days) at <a href="https://ingenieria.unal.edu.co/mindlab/">MindLab</a> Bogotá, Colombia. See more <a href="https://github.com/jfelipeosorio/sciML">here</a>.</li>
+  <li>23-SU-(W): Introduction to Scientific Machine Learning (3 days) at <a href="https://ingenieria.unal.edu.co/mindlab/">MindLab</a> Bogotá, Colombia. See more <a href="https://github.com/jfelipeosorio/sciML">on GitHub</a>.</li>
 </ul>
 
-<p><strong>Conferences/Workshops attended</strong></p>
+<h2 id="conferencesworkshops-attended">Conferences/Workshops attended</h2>
 
 <ul>
   <li>
@@ -145,13 +145,13 @@
   </li>
 </ul>
 
-<p><strong>Awards</strong></p>
+<h2 id="awards">Awards</h2>
 
 <ul>
   <li>LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.</li>
 </ul>
 
-<p><strong>Events organized</strong></p>
+<h2 id="events-organized">Events organized</h2>
 
 <ul>
   <li>
