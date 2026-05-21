@@ -16,7 +16,9 @@ background: '/img/bg-about.jpg'
 
 ## News
 
-- **Open to Summer 2026 Internship Opportunities** in ML/AI, Data Science, or Quantitative research.
+- I will be interning at JPL lab to study space weather in the solar system. Specifically, radiation around Jupiter using ML based models.
+
+- I will be giving a talk at ILAS 2026 (Blacksburg,US) on Operator learning via Equation Learning.
 
 - I will be giving a talk at SIAM-PNW 2025 (Seattle,US) on using kernel methods for learning and emulating PDEs.
 
