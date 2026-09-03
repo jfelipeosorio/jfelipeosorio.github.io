@@ -58,6 +58,10 @@ background: '/img/bg-about.jpg'
 
 ## Teaching assistant
 
+* 26-SP: AMATH563-Inferring Structure of Complex Systems
+
+* 26-WI: AMATH482-Computational Methods for Data Analysis
+
 * 25-AU: AMATH581-Intro to Scientific Computing
 
 * 24-25: Co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
