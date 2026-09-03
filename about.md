@@ -16,23 +16,23 @@ background: '/img/bg-about.jpg'
 
 ## News
 
-- I will be interning at JPL lab to study space weather in the solar system. Specifically, radiation around Jupiter using ML based models.
+- I will be giving a talk "Towards Scalable Kernel Methods for Learning and Solving Systems of Differential Equations" at the Kernel Approximation and Gaussian Processes: Integrating and Expanding Perspectives Workshop 2026 on Operator learning via Equation Learning. BIRS. Banff, Canada.
 
-- I will be giving a talk at ILAS 2026 (Blacksburg,US) on Operator learning via Equation Learning.
+- I will be giving a talk at the Mathematical and Computational Foundations of Digital Twins Workshop 2026. Institut d'Études Scientifiques de Cargèse. Corsica, France.
 
-- I will be giving a talk at SIAM-PNW 2025 (Seattle,US) on using kernel methods for learning and emulating PDEs.
+- I will be giving a talk at SIAM Mathematics of Data Science 2026. Salt Lake City, United States.
 
-- I will be giving a talk at SIAM-PDE 2025 (Pittsburgh,US) on characterizing Jupiter's radiation belt through PDEs using SciML kernel methods.
+- I will be giving a talk at AGU Annual Meeting 2026. San Francisco, United States.
 
 ## Current research projects
 
-- Learning stochastic PDEs in finance using kernel methods.
+- Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences and sismic data.
 
-- Learning/discovery of PDEs using GP/kernel methods with applications in planetary sciences (Jupiter's radiation belt) and sismic data.
+- Scalability of kernel methods for learning systems of PDEs, and general computational DAGs.
 
-- Scalability of kernel methods for learning systems of PDEs using distributed methods in optimization.
+- Solving time-dependent problems using kernel methods including Fokker-Planck and Keller-Segle models in 2D and 3D.
 
-- Solving time-dependent PDEs using kernel methods including Fokker-Planck and Keller-Segle models.
+- Uncertainty quantification for Computational Graph Completion, including PDE constrained estimators.
 
 ## Education
 
@@ -56,13 +56,68 @@ background: '/img/bg-about.jpg'
 
 * Agredo, Julián & Leon, Y. & Osorio, J. F. & Peña, A.. (2019). Buzano's inequality in algebraic probability spaces. Journal of Mathematical Inequalities. 585-599. 10.7153/jmi-2019-13-38. [Journal of Mathematical Inequalities](http://jmi.ele-math.com/13-38/Buzano-s-inequality-in-algebraic-probability-spaces)
 
-## Teaching assistant
+## Other projects
+
+- Pricing an Asian Call Option: Monte Carlo vs. PDE Approach. Quantitative Finance Bootcamp. The Erdös Institute. 
+
+## Internships
+
+- NASA Jet Propulsion Laboratory. JVSRP. Summer 2026. Supervised by Brian Zhu and Jouni Jouni Susiluoto. Studying radiation around Jupiter using Machine Learning based models.
+
+## Talks and posters
+
+* (Talk): Scalable Kernel Methods for Scientific Computing, with Guarantees. NASA Jet Propulsion Laboratory 2026. Pasadena, United States.
+
+* (Talk): Métodos kernel para la solución, aprendizaje y emulación de EDPs. Universidad Escuela Colombiana de Ingeniería Julio Garavito. Bogotá, Colombia.
+
+* (Talk): Operator Learning via Equation Learning. ILAS 2026. Virginia Tech. Blacksburg, United States.
+
+* (Talk): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.
+
+* (Talk): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators. SIAM-PNW 2025. University of Washington. Seattle, United States.
+
+* (Poster): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM at UCLA. Los Angeles, United States.
+
+* (Poster): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bath. Bath, United Kingdom.
+
+* (Poster): Kernel methods for learning PDEs. SIAM Uncertainty Quantification 2024. Trieste, Italy.
+
+* (Workshop organizer): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [on GitHub](https://github.com/jfelipeosorio/sciML).
+
+## Conferences/Workshops attended
+
+* LatMath 2025. University of California in Los Angeles. Los Angeles, United States. 
+
+* Machine Learning in Infinite Dimensions. University of Bath. Bath, United Kingdom.
+
+* 2024 SIAM Conference on Uncertainty Quantification. Trieste, Italy.
+
+* 2023 SIAM Conference on Optimization. Seattle, United States.
+
+
+## Awards
+
+* Boeing Excellence Award for Research in Applied Mathematics 2025. University of Washington.
+
+* LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
+
+
+## Events organized
+
+* Minisymposium on *Scientific Machine Learning* at SIAM PNW 2025 in Seattle, United States.
+
+* Minisymposium on *GPs and Kernel Methods for Scientific Machine Learning* at SIAM UQ 2024 in Trieste, Italy.
+
+
+## Teaching assistant appointments
+
+* 26-AU: AMATH581-Introduction to Scientific Computing
 
 * 26-SP: AMATH563-Inferring Structure of Complex Systems
 
 * 26-WI: AMATH482-Computational Methods for Data Analysis
 
-* 25-AU: AMATH581-Intro to Scientific Computing
+* 25-AU: AMATH581-Introduction to Scientific Computing
 
 * 24-25: Co-Lead Teaching Assistant for the Deparment of Mathematics at the University of Washington.
 
@@ -72,49 +127,15 @@ background: '/img/bg-about.jpg'
 
 * 23-AU: AMATH501-Vector Calculus and Complex Variables
 
-* 23-SP: AMATH583-High-Performance Scientific Computing
+* 23-SP: AMATH583-High Performance Scientific Computing
 
-* 23-WI: [MSC](https://sites.math.washington.edu/~msc/) Tutor in calculus, linear algebra and differential equations.
+* 23-WI: [MSC](https://sites.math.washington.edu/~msc/) Tutor in calculus, linear algebra and differential equations at the Math Study Center for general tutoring offered widely to the University of Washington.
 
 * 22-AU: MATH124-Calculus with Analytic Geometry I
 
-## Conferences/Posters/Workshops
+## Sports
 
-* 25-AU-(C): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.
-
-* 25-AU-(C): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators. SIAM-PNW 2025. University of Washington.
-
-* 25-WI-(C|P): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM at University of California, LA.
-
-* 24-SU-(P): Data-Efficient RKHS Methods for Learning Differential Equations: Algorithms and Error Analysis. University of Bath, UK.
-
-* 24-WI-(C): Kernel methods for learning PDEs. SIAM UQ 24. Italy.
-
-* 23-SU-(W): Introduction to Scientific Machine Learning (3 days) at [MindLab](https://ingenieria.unal.edu.co/mindlab/) Bogotá, Colombia. See more [on GitHub](https://github.com/jfelipeosorio/sciML).
-
-## Conferences/Workshops attended
-
-* LatMath 2015. University of California in Los Angeles. Los Angeles, US. 
-
-* Machine Learning in Infinite Dimensions. University of Bath. Bath, UK.
-
-* 2024 SIAM Conference on Uncertainty Quantification. Trieste, Italy.
-
-* 2023 SIAM Conference on Optimization. Seattle, USA.
-
-
-## Awards
-
-* LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
-
-
-
-## Events organized
-
-* Minisymposium on *Scientific Machine Learning* at SIAM PNW 2025 in Seattle, United States.
-
-* Minisymposium on *GPs and Kernel Methods for Scientific Machine Learning* at SIAM UQ 2024 in Trieste, Italy.
-
+- Weighlifting.
 
 
 
