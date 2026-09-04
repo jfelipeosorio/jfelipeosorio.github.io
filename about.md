@@ -10,7 +10,7 @@ background: '/img/bg-about.jpg'
     <img src="/img/about/meabout.jpeg" alt="Juan Felipe Osorio Ramirez, PhD candidate in Applied Mathematics at the University of Washington" width="100%">
   </div>
   <div style="flex: 1; padding-left: 10px;">
-    Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
+    Hi, thanks for stopping by! I am Juan Felipe Osorio Ramirez, a fourth-year PhD candidate in Applied Mathematics at the University of Washington, where I study the mathematics of data science and its role in solving and learning PDEs, particularly in physics-informed modeling and the emerging field of <b>scientific machine learning</b> using kernel methods and Gaussian Processes. I am fortunate to work under the supervision of Prof. <a href="https://bamdadhosseini.org/" target="_blank"><u>Bamdad Hosseini</u></a>.
   </div>
 </div>
 
@@ -74,6 +74,8 @@ background: '/img/bg-about.jpg'
 
 * (Talk): Uncovering Jupiter’s Radiation Belt Through PDE Learning. SIAM-PDE 2025. Pittsburgh, United States.
 
+* (Poster): Kernel methods for Learning Differential Equations and Operator Learning. IMSI 2025. Chicago, United States.
+
 * (Talk): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators. SIAM-PNW 2025. University of Washington. Seattle, United States.
 
 * (Poster): Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM at UCLA. Los Angeles, United States.
@@ -86,7 +88,13 @@ background: '/img/bg-about.jpg'
 
 ## Conferences/Workshops attended
 
-* LatMath 2025. University of California in Los Angeles. Los Angeles, United States. 
+* International Linear Algebra Society. Virginia Tech. 2026. Blacksburg, United States.
+
+* Kernel Methods in Uncertainty Quantification and Experimental Design conference. IMSI 2025. Chicago, United States.
+
+* Scientific Machine Learning. IPAM 2025. UCLA. Los Angeles, United States.
+
+* LatMath 2025. UCLA. Los Angeles, United States. 
 
 * Machine Learning in Infinite Dimensions. University of Bath. Bath, United Kingdom.
 
@@ -97,7 +105,7 @@ background: '/img/bg-about.jpg'
 
 ## Awards
 
-* Boeing Excellence Award for Research in Applied Mathematics 2025. University of Washington.
+* Boeing Excellence Award for Research in Applied Mathematics 2026. University of Washington.
 
 * LatMath Graduate Student Poster Session Winner: Data-Efficient Kernel Methods for Learning Differential Equations and Their Solution Operators: Algorithms and Error Analysis. LatMath 2025. IPAM/UCLA.
 
